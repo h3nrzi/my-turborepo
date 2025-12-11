@@ -10,7 +10,7 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { MongooseExceptionFilter } from './common/filters/mongoose-exception.filter';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   const rootDir = path.resolve();
   const server = app.getHttpAdapter().getInstance() as express.Express;
@@ -19,6 +19,13 @@ async function bootstrap() {
   app.use(cookieParser());
   app.use(morgan('dev'));
   server.use('/uploads', express.static(path.join(rootDir, '/uploads')));
+
+  app.enableCors({
+    origin: process.env.CORS_ORIGIN?.split(',') || ['http://localhost:5173'],
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
+  });
 
   app.setGlobalPrefix('api');
   app.useGlobalFilters(
