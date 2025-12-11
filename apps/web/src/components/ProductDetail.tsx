@@ -10,7 +10,6 @@ import {
 } from 'react-bootstrap';
 import Product from '../types/Product';
 
-
 interface Props {
   product: Product;
   onAddToCart(qty: number): void;
@@ -31,7 +30,9 @@ const ProductDetail: FC<Props> = ({ product, onAddToCart }) => {
             <h3>{product.name}</h3>
           </ListGroup.Item>
           <ListGroup.Item>
-            <div>Rating: {product.rating}/5 ({product.numReviews} reviews)</div>
+            <div>
+              Rating: {product.rating}/5 ({product.numReviews} reviews)
+            </div>
           </ListGroup.Item>
           <ListGroup.Item>Description: {product.description}</ListGroup.Item>
         </ListGroup>

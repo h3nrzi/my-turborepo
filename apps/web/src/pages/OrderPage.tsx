@@ -8,9 +8,9 @@ import {
 import moment from 'moment';
 import { FC, Fragment, useEffect } from 'react';
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { Link, useParams } from 'react-router-dom';
 import {
   useGetOrderQuery,
   useGetPayPalClientIdQuery,
@@ -25,7 +25,6 @@ import getErrorMessage from '../utils/getErrorMessage';
 
 export default function OrderPage() {
   const { id: orderId } = useParams();
-  const navigate = useNavigate();
   const userInfo = useSelector((s: RootState) => s.auth.userInfo);
   const {
     data: order,
@@ -88,16 +87,10 @@ export default function OrderPage() {
       try {
         await updateOrderToPaidMutation({ orderId, details: payload }).unwrap();
         orderQueryRefetch();
-        toast.success('Payment successful!', {
-          onClick: () => navigate('/profile'),
-          position: 'top-center',
-          style: { cursor: 'pointer' },
-        });
+        toast.success('Payment successful! Click to view profile');
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
-        toast.error(error?.data?.message || error.error, {
-          position: 'top-center',
-        });
+        toast.error(error?.data?.message || error.error || 'Payment failed');
       }
     });
   };
@@ -112,16 +105,10 @@ export default function OrderPage() {
     try {
       await updateOrderToPaidMutation({ orderId, details }).unwrap();
       orderQueryRefetch();
-      toast.success('Payment successful!', {
-        onClick: () => navigate('/profile'),
-        position: 'top-center',
-        style: { cursor: 'pointer' },
-      });
+      toast.success('Payment successful! Click to view profile');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error, {
-        position: 'top-center',
-      });
+      toast.error(error?.data?.message || error.error || 'Payment failed');
     }
   };
 
@@ -146,23 +133,19 @@ export default function OrderPage() {
 
   const onError: PayPalButtonsComponentProps['onError'] = (err: unknown) => {
     const error = err as { message?: string };
-    toast.error(error?.message, { position: 'top-center' });
+    toast.error(error?.message || 'PayPal error occurred');
   };
 
   const deliverOrderHandler = async () => {
     try {
       await updateOrderToDeliverMutation({ orderId });
       orderQueryRefetch();
-      toast.success('Order has been delivered', {
-        onClick: () => navigate('/admin/order-list'),
-        position: 'top-center',
-        style: { cursor: 'pointer' },
-      });
+      toast.success('Order delivered! Click to view orders');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error, {
-        position: 'top-center',
-      });
+      toast.error(
+        error?.data?.message || error.error || 'Failed to deliver order',
+      );
     }
   };
 

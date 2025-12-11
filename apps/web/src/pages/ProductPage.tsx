@@ -10,9 +10,9 @@ import {
   Row,
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import {
   useCreateProductReviewMutation,
   useGetProductQuery,
@@ -27,7 +27,6 @@ interface FormData {
 
 export default function ProductPage() {
   const { id: productId } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const orderItems = useSelector((state: RootState) => state.cart.orderItems);
   const existingCartItem = orderItems.find((item) => item._id === productId);
@@ -62,10 +61,7 @@ export default function ProductPage() {
     }
 
     dispatch(addToCart({ ...product, qty }));
-    toast.success('Product added to cart! Click to view cart', {
-      onClick: () => navigate('/cart'),
-      style: { cursor: 'pointer' }
-    });
+    toast.success('Product added to cart!');
   }
 
   if (isLoading) return <div>Loading...</div>;
