@@ -12,6 +12,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import {
   useCreateProductReviewMutation,
   useGetProductQuery,
@@ -38,9 +39,9 @@ export default function ProductPage() {
   async function submitHandler(data: FormData) {
     try {
       await createProductReviewMutation({ productId, ...data }).unwrap();
-      alert('Review submitted successfully!');
+      toast.success('Review submitted successfully!');
     } catch {
-      alert('Failed to submit review');
+      toast.error('Failed to submit review');
     }
   }
 
@@ -48,21 +49,23 @@ export default function ProductPage() {
     if (!product) return;
 
     if (existingCartItem && existingCartItem.qty === qty) {
-      alert('Product already in cart with same quantity!');
+      toast('Product already in cart with same quantity!', {
+        icon: '⚠️',
+      });
       return;
     }
 
     if (existingCartItem && existingCartItem.qty !== qty) {
       dispatch(addToCart({ ...product, qty }));
-      alert('Cart quantity updated!');
+      toast.success('Cart quantity updated!');
       return;
     }
 
     dispatch(addToCart({ ...product, qty }));
-    const goToCart = confirm('Product added to cart! Go to cart?');
-    if (goToCart) {
-      navigate('/cart');
-    }
+    toast.success('Product added to cart! Click to view cart', {
+      onClick: () => navigate('/cart'),
+      style: { cursor: 'pointer' }
+    });
   }
 
   if (isLoading) return <div>Loading...</div>;
