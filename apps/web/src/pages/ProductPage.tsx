@@ -1,5 +1,13 @@
 import { Fragment } from 'react';
-import { Button, Col, Form, ListGroup, Row, Stack } from 'react-bootstrap';
+import {
+  Button,
+  Col,
+  Form,
+  ListGroup,
+  Row,
+  Stack,
+  FloatingLabel,
+} from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -164,9 +172,10 @@ export default function ProductPage() {
                         <h2 className="flex-md-grow-1 fw-bold">
                           Write a Customer Review
                         </h2>
-                        <Form.Floating>
+                        <FloatingLabel controlId="rating" label="Rating">
                           <Form.Select
                             aria-label="Rating"
+                            defaultValue=""
                             {...register('rating', {
                               valueAsNumber: true,
                               required: 'Rating is required',
@@ -180,13 +189,12 @@ export default function ProductPage() {
                             <option value="4">4 - Very Good</option>
                             <option value="5">5 - Excellent</option>
                           </Form.Select>
-                          <label htmlFor="rating">Rating</label>
                           {errors.rating && (
                             <p className="text-danger">
                               {errors.rating.message}
                             </p>
                           )}
-                        </Form.Floating>
+                        </FloatingLabel>
                       </Stack>
                     </Form.Group>
                     <Form.Group as="fieldset" controlId="comment">
