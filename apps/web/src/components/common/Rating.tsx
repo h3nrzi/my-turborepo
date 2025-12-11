@@ -1,6 +1,4 @@
 import { FC } from 'react';
-import { FaRegStar, FaStar, FaStarHalfAlt } from 'react-icons/fa';
-import './Rating.css';
 
 interface Props {
   value: number;
@@ -9,53 +7,13 @@ interface Props {
 
 const Rating: FC<Props> = ({ value, text }) => {
   return (
-    <div className="rating">
-      <span>
-        {value >= 1 ? (
-          <FaStar />
-        ) : value >= 0.5 ? (
-          <FaStarHalfAlt />
-        ) : (
-          <FaRegStar />
-        )}
-      </span>
-      <span>
-        {value >= 2 ? (
-          <FaStar />
-        ) : value >= 1.5 ? (
-          <FaStarHalfAlt />
-        ) : (
-          <FaRegStar />
-        )}
-      </span>
-      <span>
-        {value >= 3 ? (
-          <FaStar />
-        ) : value >= 2.5 ? (
-          <FaStarHalfAlt />
-        ) : (
-          <FaRegStar />
-        )}
-      </span>
-      <span>
-        {value >= 4 ? (
-          <FaStar />
-        ) : value >= 3.5 ? (
-          <FaStarHalfAlt />
-        ) : (
-          <FaRegStar />
-        )}
-      </span>
-      <span>
-        {value >= 5 ? (
-          <FaStar />
-        ) : value >= 4.5 ? (
-          <FaStarHalfAlt />
-        ) : (
-          <FaRegStar />
-        )}
-      </span>
-      <span className="rating-text">{text && text}</span>
+    <div style={{ display: 'flex', alignItems: 'center' }}>
+      {[1, 2, 3, 4, 5].map((star) => (
+        <span key={star} style={{ color: '#f8e825', margin: '0.1rem' }}>
+          {value >= star ? '★' : value >= star - 0.5 ? '☆' : '☆'}
+        </span>
+      ))}
+      <span style={{ fontSize: '0.8rem', fontWeight: 600, paddingLeft: '0.5rem' }}>{text && text}</span>
     </div>
   );
 };

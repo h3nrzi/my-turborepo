@@ -1,29 +1,23 @@
-import { Fragment } from 'react';
+import { useState } from 'react';
 import {
+  Badge,
   Button,
+  Card,
   Col,
+  Container,
   Form,
-  ListGroup,
+  Image,
   Row,
-  Stack,
-  FloatingLabel,
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   useCreateProductReviewMutation,
   useGetProductQuery,
 } from '../api/products-api';
 import { addToCart } from '../app/cart-slice';
-import Message from '../components/common/Message';
-import Rating from '../components/common/Rating';
-import ProductDetail from '../components/ProductDetail';
-import ProductDetailPlaceholder from '../components/ProductDetailSkeleton';
 import { RootState } from '../store';
-import getErrorMessage from '../utils/getErrorMessage';
-import Meta from '../components/common/Meta';
 
 interface FormData {
   rating: number;
@@ -36,196 +30,225 @@ export default function ProductPage() {
   const dispatch = useDispatch();
   const orderItems = useSelector((state: RootState) => state.cart.orderItems);
   const existingCartItem = orderItems.find((item) => item._id === productId);
-  const shouldSkipProductQuery = !productId;
-  const {
-    data: product,
-    isLoading: productQueryLoading,
-    isFetching: productQueryFetching,
-    error: productQueryError,
-    refetch: productQueryRefetch,
-  } = useGetProductQuery({ productId }, { skip: shouldSkipProductQuery });
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<FormData>();
-  const [
-    createProductReviewMutation,
-    { isLoading: createProductReviewLoading },
-  ] = useCreateProductReviewMutation();
-  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
-  const isProductLoading = productQueryLoading || productQueryFetching;
+  const { data: product, isLoading } = useGetProductQuery({ productId });
+  const { register, handleSubmit } = useForm<FormData>();
+  const [createProductReviewMutation] = useCreateProductReviewMutation();
+  const [qty, setQty] = useState(1);
 
   async function submitHandler(data: FormData) {
-    if (!productId || !product?._id) {
-      toast.error('Product not found', { position: 'top-center' });
-      return;
-    }
-
-    if (!data.rating || !data.comment)
-      return toast.error('Please fill out the form', {
-        position: 'top-center',
-      });
-
     try {
-      const res = await createProductReviewMutation({
-        productId,
-        ...data,
-      }).unwrap();
-      productQueryRefetch();
-      toast.success(res.message, { position: 'top-center' });
-      setValue('comment', '');
-      setValue('rating', 0);
-    } catch (err: unknown) {
-      const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error, {
-        position: 'top-center',
-      });
+      await createProductReviewMutation({ productId, ...data }).unwrap();
+      alert('Review submitted successfully!');
+    } catch {
+      alert('Failed to submit review');
     }
   }
 
-  function addToCartHandler(qty: number) {
-    if (!product) {
-      toast.error('Product not found', { position: 'top-center' });
+  function addToCartHandler() {
+    if (!product) return;
+
+    if (existingCartItem && existingCartItem.qty === qty) {
+      alert('Product already in cart with same quantity!');
       return;
     }
-
-    if (existingCartItem && existingCartItem.qty === qty)
-      return toast.warn('Product already added!', { position: 'top-center' });
 
     if (existingCartItem && existingCartItem.qty !== qty) {
       dispatch(addToCart({ ...product, qty }));
-      return toast.success('Quantity updated successfully.', {
-        onClick: () => navigate('/cart'),
-        position: 'top-center',
-        style: { cursor: 'pointer' },
-      });
+      alert('Cart quantity updated!');
+      return;
     }
 
     dispatch(addToCart({ ...product, qty }));
-    return toast.success('Product Added to your cart.', {
-      onClick: () => navigate('/cart'),
-      position: 'top-center',
-      style: { cursor: 'pointer' },
-    });
+    const goToCart = confirm('Product added to cart! Go to cart?');
+    if (goToCart) {
+      navigate('/cart');
+    }
   }
 
-  if (!productId) {
-    return (
-      <Message variant="danger">Product ID is missing from the URL.</Message>
-    );
-  }
-
-  if (productQueryError) {
-    return (
-      <Message variant="danger">{getErrorMessage(productQueryError)}</Message>
-    );
-  }
+  if (isLoading) return <div>Loading...</div>;
+  if (!product) return <div>Product not found</div>;
 
   return (
-    <Fragment>
-      <Meta title={product?.name} description={product?.description} />
-      {isProductLoading ? (
-        <ProductDetailPlaceholder />
-      ) : product ? (
-        <ProductDetail product={product} onAddToCart={addToCartHandler} />
-      ) : (
-        <Message variant="danger">Product not found.</Message>
-      )}
+    <Container className="py-4">
+      {/* Product Details Section */}
+      <Row className="mb-5">
+        <Col lg={6} className="mb-4">
+          <Card className="h-100 border-0 shadow-sm">
+            <Card.Body className="p-0">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fluid
+                className="w-100"
+                style={{ height: '400px', objectFit: 'cover' }}
+              />
+            </Card.Body>
+          </Card>
+        </Col>
 
-      {product && (
-        <Row className="mt-5">
-          <Col md={6}>
-            <h2 className="fw-bold">Reviews</h2>
-            {product.reviews?.length === 0 && (
-              <Message variant="info">No Reviews</Message>
-            )}
-            <ListGroup variant="flush">
-              {product.reviews?.map((review) => (
-                <ListGroup.Item key={review._id}>
-                  <strong>{review.name || 'Anonymous'}</strong>
-                  <Rating value={review.rating || 0} />
-                  <p>{review.createdAt?.substring(0, 10) || 'Unknown date'}</p>
-                  <p>{review.comment || 'No comment'}</p>
-                </ListGroup.Item>
-              ))}
+        <Col lg={6}>
+          <div className="mb-4">
+            <h1 className="display-6 fw-bold mb-3">{product.name}</h1>
+            <div className="mb-3">
+              <span className="text-warning me-2">
+                {'★'.repeat(Math.floor(product.rating))}
+                {'☆'.repeat(5 - Math.floor(product.rating))}
+              </span>
+              <span className="text-muted">({product.numReviews} reviews)</span>
+            </div>
+            <p className="lead text-muted mb-4">{product.description}</p>
+          </div>
 
-              <ListGroup.Item className="p-0 mt-5">
-                {!userInfo ? (
-                  <Fragment>
-                    <h2 className="flex-md-grow-1 fw-bold">
-                      Write a Customer Review
-                    </h2>
-                    <Message variant="info">
-                      Please{' '}
-                      <Link to={`/login?redirect=/product/${product._id}`}>
-                        sign in
-                      </Link>{' '}
-                      to write a review
-                    </Message>
-                  </Fragment>
-                ) : (
+          <Card className="shadow-sm">
+            <Card.Body>
+              <Row className="align-items-center mb-3">
+                <Col>
+                  <h3 className="text-success mb-0">${product.price}</h3>
+                </Col>
+                <Col className="text-end">
+                  <Badge
+                    bg={product.countInStock > 0 ? 'success' : 'danger'}
+                    className="fs-6"
+                  >
+                    {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                  </Badge>
+                </Col>
+              </Row>
+
+              {product.countInStock > 0 && (
+                <Row className="mb-3">
+                  <Col xs={4}>
+                    <Form.Label className="fw-semibold">Qty:</Form.Label>
+                  </Col>
+                  <Col xs={8}>
+                    <Form.Select
+                      value={qty}
+                      onChange={(e) => setQty(Number(e.target.value))}
+                      size="sm"
+                    >
+                      {Array.from(
+                        { length: Math.min(product.countInStock, 10) },
+                        (_, i) => (
+                          <option key={i + 1} value={i + 1}>
+                            {i + 1}
+                          </option>
+                        ),
+                      )}
+                    </Form.Select>
+                  </Col>
+                </Row>
+              )}
+
+              <Button
+                size="lg"
+                disabled={product.countInStock === 0}
+                className="w-100"
+                onClick={addToCartHandler}
+              >
+                {existingCartItem ? 'Update Cart' : 'Add To Cart'}
+              </Button>
+
+              {existingCartItem && (
+                <div className="text-center mt-2">
+                  <small className="text-muted">
+                    Currently in cart: {existingCartItem.qty}
+                  </small>
+                </div>
+              )}
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+
+      {/* Reviews Section */}
+      <Row>
+        <Col lg={8} className="mx-auto">
+          <Card className="shadow-sm">
+            <Card.Header>
+              <h2 className="fw-bold mb-0">Customer Reviews</h2>
+            </Card.Header>
+            <Card.Body>
+              {product.reviews?.length === 0 ? (
+                <div className="text-center text-muted py-4">
+                  <p>No reviews yet. Be the first to review this product!</p>
+                </div>
+              ) : (
+                <div className="mb-4">
+                  {product.reviews?.map((review) => (
+                    <Card
+                      key={review._id}
+                      className="mb-3 border-start border-primary border-3"
+                    >
+                      <Card.Body>
+                        <div className="d-flex justify-content-between align-items-start mb-2">
+                          <h5 className="mb-1">{review.name}</h5>
+                          <div className="text-warning">
+                            {'★'.repeat(review.rating)}
+                            {'☆'.repeat(5 - review.rating)}
+                          </div>
+                        </div>
+                        <small className="text-muted">
+                          {review.createdAt?.substring(0, 10)}
+                        </small>
+                        <p className="mt-2 mb-0">{review.comment}</p>
+                      </Card.Body>
+                    </Card>
+                  ))}
+                </div>
+              )}
+
+              {/* Review Form */}
+              <Card>
+                <Card.Body>
+                  <h4 className="fw-bold mb-4">Write a Review</h4>
                   <Form onSubmit={handleSubmit(submitHandler)}>
-                    <Form.Group controlId="rating" className="my-2">
-                      <Stack className="flex-column flex-md-row align-items-md-start gap-md-2">
-                        <h2 className="flex-md-grow-1 fw-bold">
-                          Write a Customer Review
-                        </h2>
-                        <FloatingLabel controlId="rating" label="Rating">
+                    <Row>
+                      <Col md={6}>
+                        <Form.Group className="mb-3">
+                          <Form.Label className="fw-semibold">
+                            Rating
+                          </Form.Label>
                           <Form.Select
-                            aria-label="Rating"
-                            defaultValue=""
                             {...register('rating', {
                               valueAsNumber: true,
                               required: 'Rating is required',
                             })}
-                            isInvalid={!!errors.rating}
                           >
-                            <option value=""></option>
-                            <option value="1">1 - Poor</option>
-                            <option value="2">2 - Fair</option>
-                            <option value="3">3 - Good</option>
-                            <option value="4">4 - Very Good</option>
-                            <option value="5">5 - Excellent</option>
+                            <option value="">Select a rating</option>
+                            <option value="1">★ 1 - Poor</option>
+                            <option value="2">★★ 2 - Fair</option>
+                            <option value="3">★★★ 3 - Good</option>
+                            <option value="4">★★★★ 4 - Very Good</option>
+                            <option value="5">★★★★★ 5 - Excellent</option>
                           </Form.Select>
-                          {errors.rating && (
-                            <p className="text-danger">
-                              {errors.rating.message}
-                            </p>
-                          )}
-                        </FloatingLabel>
-                      </Stack>
-                    </Form.Group>
-                    <Form.Group as="fieldset" controlId="comment">
-                      <Form.Label as="legend">Comment</Form.Label>
+                        </Form.Group>
+                      </Col>
+                    </Row>
+
+                    <Form.Group className="mb-3">
+                      <Form.Label className="fw-semibold">
+                        Your Review
+                      </Form.Label>
                       <Form.Control
                         as="textarea"
-                        placeholder="Write a comment..."
-                        rows={5}
+                        rows={4}
+                        placeholder="Share your thoughts about this product..."
                         {...register('comment', {
                           required: 'Comment is required',
                         })}
-                        isInvalid={!!errors.comment}
                       />
-                      {errors.comment && (
-                        <p className="text-danger">{errors.comment?.message}</p>
-                      )}
                     </Form.Group>
-                    <Button
-                      type="submit"
-                      className="mt-2 w-25"
-                      disabled={createProductReviewLoading}
-                    >
-                      Submit
+
+                    <Button type="submit" size="lg">
+                      Submit Review
                     </Button>
                   </Form>
-                )}
-              </ListGroup.Item>
-            </ListGroup>
-          </Col>
-        </Row>
-      )}
-    </Fragment>
+                </Card.Body>
+              </Card>
+            </Card.Body>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 }
