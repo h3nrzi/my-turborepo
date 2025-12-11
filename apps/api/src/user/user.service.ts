@@ -57,7 +57,7 @@ export class UserService {
     res.cookie('jwt', token, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'none',
       path: '/',
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
@@ -103,8 +103,8 @@ export class UserService {
   logout(res: Response): { message: string } {
     res.cookie('jwt', '', {
       httpOnly: true,
-      secure: false,
-      sameSite: 'lax',
+      secure: true,
+      sameSite: 'none',
       path: '/',
       expires: new Date(0),
     });
