@@ -1,12 +1,12 @@
-import apiSlice from '../store/api-slice';
-import type Cart from '../types/Cart';
+import baseApi from '../shared/api/baseApi';
+import type { CartState } from '../modules/cart';
 import type Order from '../types/Order';
 import type { PaymentResult } from '../types/Order';
 import { ORDER_URL, PAYPAL_URL } from '../utils/constants';
 
 interface Req {
   GetOrder: { orderId?: string };
-  CreateOrder: Cart;
+  CreateOrder: CartState;
   UpdateOrderToPaid: { orderId?: string; details?: PaymentResult };
   UpdateOrderToDeliver: { orderId?: string };
 }
@@ -21,7 +21,7 @@ interface Res {
   UpdateOrderToDeliver: Order;
 }
 
-const orderApi = apiSlice.injectEndpoints({
+const orderApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // Queries
 

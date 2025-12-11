@@ -12,15 +12,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useCreateOrderMutation } from '../api/orders-api';
-import { resetCart } from '../app/cart-slice';
+import { resetCart, type CartState, type ShippingAddress } from '../modules/cart';
 import CheckoutSteps from '../components/common/CheckoutSteps';
 import Message from '../components/common/Message';
-import { RootState } from '../store';
-import Cart, { ShippingAddress } from '../types/Cart';
+import { RootState } from '../app/store';
 import Product from '../types/Product';
 
 export default function PlaceOrderPage() {
-  const cart = useSelector((s: RootState) => s.cart);
+  const cart = useSelector((s: RootState) => s.cart) as CartState;
   const paymentMethod = useSelector((s: RootState) => s.cart.paymentMethod);
   const [createOrder, { isLoading: createOrderLoading }] =
     useCreateOrderMutation();
@@ -132,7 +131,7 @@ const OrderItems = ({ orderItems }: OrderItemsProps) => (
 );
 
 interface OrderSummaryProps {
-  cart: Cart;
+  cart: CartState;
   onPlaceOrder: () => void;
   createOrderLoading: boolean;
 }

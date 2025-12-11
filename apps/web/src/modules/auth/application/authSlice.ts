@@ -1,13 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import type Auth from '../types/Auth';
-import type { UserInfo } from '../types/Auth';
+import type { AuthState, UserInfo } from '../domain/auth';
+import { loadAuthState, persistAuthState } from '../infrastructure/authStorage';
 
-const initialState: Auth = {
-  userInfo: localStorage.getItem('userInfo')
-    ? JSON.parse(localStorage.getItem('userInfo')!)
-    : null,
-};
+const initialState: AuthState = loadAuthState();
 
 const authSlice = createSlice({
   name: 'auth',
@@ -15,12 +11,12 @@ const authSlice = createSlice({
   reducers: {
     setCredentials: (auth, action: PayloadAction<UserInfo>) => {
       auth.userInfo = action.payload;
-      localStorage.setItem('userInfo', JSON.stringify(action.payload));
+      persistAuthState(auth);
     },
 
     clearCredentials: (auth) => {
       auth.userInfo = undefined;
-      localStorage.removeItem('userInfo');
+      persistAuthState(auth);
     },
   },
 });

@@ -19,7 +19,7 @@ import {
 } from '../api/orders-api';
 import Loader from '../components/common/Loader';
 import Message from '../components/common/Message';
-import { RootState } from '../store';
+import { RootState } from '../app/store';
 import Order from '../types/Order';
 import getErrorMessage from '../utils/getErrorMessage';
 

@@ -8,10 +8,10 @@ import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useGetMyOrdersQuery } from '../api/orders-api';
 import { useUpdateProfileMutation } from '../api/users-api';
-import { setCredentials } from '../app/auth-slice';
+import { setCredentials } from '../modules/auth';
 import Loader from '../components/common/Loader';
 import Message from '../components/common/Message';
-import { RootState } from '../store';
+import { RootState } from '../app/store';
 import Order from '../types/Order';
 import getErrorMessage from '../utils/getErrorMessage';
 

@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useGetUserQuery, useUpdateUserMutation } from '../../api/users-api';
-import { setCredentials } from '../../app/auth-slice';
+import { setCredentials } from '../../modules/auth';
 import FormContainer from '../../components/common/FormContainer';
 import Loader from '../../components/common/Loader';
 import Message from '../../components/common/Message';
-import { RootState } from '../../store';
+import { RootState } from '../../app/store';
 import getErrorMessage from '../../utils/getErrorMessage';
 
 interface FormData {

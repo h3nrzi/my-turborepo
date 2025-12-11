@@ -1,5 +1,5 @@
-import apiSlice from '../store/api-slice';
-import type { UserInfo } from '../types/Auth';
+import baseApi from '../shared/api/baseApi';
+import type { UserInfo } from '../modules/auth';
 import { USERS_URL } from '../utils/constants';
 
 interface Req {
@@ -23,7 +23,7 @@ interface Res {
   UpdateProfile: UserInfo;
 }
 
-const usersApi = apiSlice.injectEndpoints({
+const usersApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // Queries
     getAllUser: builder.query<Res['GetAll'], Req['GetAll']>({

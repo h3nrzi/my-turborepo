@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useRegisterMutation } from '../api/users-api';
-import { setCredentials } from '../app/auth-slice';
+import { setCredentials } from '../modules/auth';
 import FormContainer from '../components/common/FormContainer';
-import { RootState } from '../store';
+import { RootState } from '../app/store';
 
 interface FormData {
   name: string;

@@ -11,12 +11,11 @@ import {
   useGetAllUserQuery,
   useLogoutMutation,
 } from '../../api/users-api';
-import { clearCredentials } from '../../app/auth-slice';
-import { resetCart } from '../../app/cart-slice';
+import { clearCredentials, UserInfo } from '../../modules/auth';
+import { resetCart } from '../../modules/cart';
 import Loader from '../../components/common/Loader';
 import Message from '../../components/common/Message';
-import { RootState } from '../../store';
-import { UserInfo } from '../../types/Auth';
+import { RootState } from '../../app/store';
 import getErrorMessage from '../../utils/getErrorMessage';
 import getUserIcon from '../../utils/getUserIcon';
 

@@ -1,23 +1,23 @@
 import { createBrowserRouter } from 'react-router-dom';
-import AdminLayout from './layout/AdminLayout';
-import AppLayout from './layout/AppLayout';
-import PrivateLayout from './layout/PrivateLayout';
-import CartPage from './pages/CartPage';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import OrderPage from './pages/OrderPage';
-import PaymentPage from './pages/PaymentPage';
-import PlaceOrderPage from './pages/PlaceOrderPage';
-import ProductPage from './pages/ProductPage';
-import ProfilePage from './pages/ProfilePage';
-import RegisterPage from './pages/RegisterPage';
-import ShippingPage from './pages/ShippingPage';
-import OrderListPage from './pages/admin/OrderListPage';
-import ProductEditPage from './pages/admin/ProductEditPage';
-import ProductListPage from './pages/admin/ProductListPage';
-import ProductNewPage from './pages/admin/ProductNewPage';
-import UserEditPage from './pages/admin/UserEditPage';
-import UserListPage from './pages/admin/UserListPage';
+import AdminLayout from '../../layout/AdminLayout';
+import AppLayout from '../../layout/AppLayout';
+import PrivateLayout from '../../layout/PrivateLayout';
+import CartPage from '../../pages/CartPage';
+import HomePage from '../../pages/HomePage';
+import LoginPage from '../../pages/LoginPage';
+import OrderPage from '../../pages/OrderPage';
+import PaymentPage from '../../pages/PaymentPage';
+import PlaceOrderPage from '../../pages/PlaceOrderPage';
+import ProductPage from '../../pages/ProductPage';
+import ProfilePage from '../../pages/ProfilePage';
+import RegisterPage from '../../pages/RegisterPage';
+import ShippingPage from '../../pages/ShippingPage';
+import OrderListPage from '../../pages/admin/OrderListPage';
+import ProductEditPage from '../../pages/admin/ProductEditPage';
+import ProductListPage from '../../pages/admin/ProductListPage';
+import ProductNewPage from '../../pages/admin/ProductNewPage';
+import UserEditPage from '../../pages/admin/UserEditPage';
+import UserListPage from '../../pages/admin/UserListPage';
 
 const router = createBrowserRouter([
   {
@@ -29,7 +29,6 @@ const router = createBrowserRouter([
       { path: 'cart', element: <CartPage /> },
       { path: 'register', element: <RegisterPage /> },
       { path: 'login', element: <LoginPage /> },
-
       {
         path: '',
         element: <PrivateLayout />,
@@ -39,7 +38,6 @@ const router = createBrowserRouter([
           { path: 'placeorder', element: <PlaceOrderPage /> },
           { path: 'order/:id', element: <OrderPage /> },
           { path: '/profile', element: <ProfilePage /> },
-
           {
             path: 'admin',
             element: <AdminLayout />,

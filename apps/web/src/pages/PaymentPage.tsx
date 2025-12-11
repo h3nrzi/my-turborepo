@@ -3,10 +3,10 @@ import { Button, Col, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { savePaymentMethod } from '../app/cart-slice';
+import { savePaymentMethod } from '../modules/cart';
 import CheckoutSteps from '../components/common/CheckoutSteps';
 import FormContainer from '../components/common/FormContainer';
-import { RootState } from '../store';
+import { RootState } from '../app/store';
 
 const PaymentPage = () => {
   const ref = useRef<HTMLInputElement>(null);
@@ -25,7 +25,8 @@ const PaymentPage = () => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(savePaymentMethod(ref.current?.value));
+    const paymentMethod = ref.current?.value ?? '';
+    dispatch(savePaymentMethod(paymentMethod));
     navigate('/placeorder');
   };
 

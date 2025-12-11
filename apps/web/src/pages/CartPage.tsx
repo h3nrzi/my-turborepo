@@ -2,11 +2,11 @@ import { Card, Col, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { addToCart, removeFromCart } from '../app/cart-slice';
+import { addToCart, removeFromCart } from '../modules/cart';
 import CartItem from '../components/CartItem';
 import CartSummary from '../components/CartSummary';
 import Message from '../components/common/Message';
-import { RootState } from '../store';
+import { RootState } from '../app/store';
 import Product from '../types/Product';
 import CheckoutSteps from '../components/common/CheckoutSteps';
 

@@ -14,20 +14,22 @@ npm install
 ```
 
 ### 2. Environment Setup
-Create `.env` files in both apps:
+Create `.env` files in both apps (copy from the included `.env.example` files if you want working defaults):
 
 **apps/api/.env**
 ```env
 NODE_ENV=production
 PORT=3000
-MONGODB_URI=mongodb+srv://hossein:hossein123@cluster0.mongodb.net/proshop
-JWT_SECRET=abc123
-PAYPAL_CLIENT_ID=your_paypal_client_id
+MONGO_URI=mongodb+srv://<username>:<password>@<cluster-url>/proshop
+MONGO_DB=proshop
+JWT_SECRET=<your_jwt_secret>
+PAYPAL_CLIENT_ID=<your_paypal_client_id>
+CORS_ORIGIN=http://localhost:5173
 ```
 
 **apps/web/.env**
 ```env
-VITE_API_URL=https://your-api-domain.com
+VITE_API_URL=http://localhost:3000
 ```
 
 ### 3. Development Mode
@@ -62,13 +64,16 @@ npm run build
 ## Environment Variables
 
 ### Required for API
-- `MONGODB_URI` - MongoDB connection string
+- `MONGO_URI` - MongoDB connection string
+- `MONGO_DB` - Database name (defaults to `proshop`)
 - `JWT_SECRET` - JWT signing secret
 - `PAYPAL_CLIENT_ID` - PayPal integration
+- `CORS_ORIGIN` - Allowed frontend origin
 - `NODE_ENV=production`
 
 ### Required for Web
 - `VITE_API_URL` - Backend API URL
+- `VITE_PAYPAL_CLIENT_ID` - PayPal client ID for frontend initialization
 
 ## CORS Configuration
 Backend is configured for cross-domain requests:
@@ -78,7 +83,7 @@ Backend is configured for cross-domain requests:
 
 ## Database
 - **MongoDB Atlas** (cloud-hosted)
-- Connection string in `MONGODB_URI`
+- Connection string in `MONGO_URI`
 - No local setup required
 
 ## Key Features

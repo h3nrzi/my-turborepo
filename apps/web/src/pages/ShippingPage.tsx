@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { saveShippingAddress } from '../app/cart-slice';
+import { saveShippingAddress } from '../modules/cart';
 import FormContainer from '../components/common/FormContainer';
-import { RootState } from '../store';
+import { RootState } from '../app/store';
 import CheckoutSteps from '../components/common/CheckoutSteps';
 
 type FormData = {

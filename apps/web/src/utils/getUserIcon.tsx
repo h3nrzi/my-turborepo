@@ -1,5 +1,5 @@
 import { FaCheck, FaCheckSquare, FaTimes } from 'react-icons/fa';
-import { UserInfo } from '../types/Auth';
+import { UserInfo } from '../modules/auth';
 
 export default function getAdminIcon(user: UserInfo) {
   if (user.isAdmin)

@@ -1,4 +1,4 @@
-import { UserInfo } from './Auth';
+import { UserInfo } from '../modules/auth';
 
 interface Review {
   _id: string;

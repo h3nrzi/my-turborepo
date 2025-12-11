@@ -17,8 +17,8 @@ import {
   useCreateProductReviewMutation,
   useGetProductQuery,
 } from '../api/products-api';
-import { addToCart } from '../app/cart-slice';
-import { RootState } from '../store';
+import { addToCart } from '../modules/cart';
+import { RootState } from '../app/store';
 
 interface FormData {
   rating: number;

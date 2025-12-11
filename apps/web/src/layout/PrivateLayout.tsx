@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom';
-import { RootState } from '../store';
+import { RootState } from '../app/store';
 
 const PrivateLayout = () => {
   const userInfo = useSelector((s: RootState) => s.auth.userInfo);

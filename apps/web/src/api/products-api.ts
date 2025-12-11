@@ -1,4 +1,4 @@
-import apiSlice from '../store/api-slice';
+import baseApi from '../shared/api/baseApi';
 import type Product from '../types/Product';
 import { PRODUCT_URL, UPLOAD_URL } from '../utils/constants';
 
@@ -25,7 +25,7 @@ interface Res {
   CreateReview: { message: string };
 }
 
-const productsApi = apiSlice.injectEndpoints({
+const productsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     // Queries
 

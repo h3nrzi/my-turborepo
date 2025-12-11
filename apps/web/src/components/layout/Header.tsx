@@ -12,11 +12,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useLogoutMutation } from '../../api/users-api';
-import { clearCredentials } from '../../app/auth-slice';
-import { resetCart } from '../../app/cart-slice';
+import { clearCredentials, UserInfo } from '../../modules/auth';
+import { resetCart } from '../../modules/cart';
 import logo from '../../assets/logo.png';
-import { RootState } from '../../store';
-import { UserInfo } from '../../types/Auth';
+import { RootState } from '../../app/store';
 import ThemeSwitch from '../common/ThemeSwitch';
 import SearchBox from '../common/SearchBox';
 
