@@ -110,10 +110,10 @@ export default function ProductPage() {
           <ListGroup variant="flush">
             {product?.reviews?.map((review) => (
               <ListGroup.Item key={review._id}>
-                <strong>{review.name}</strong>
-                <Rating value={review.rating} />
-                <p>{review.createdAt.substring(0, 10)}</p>
-                <p>{review.comment}</p>
+                <strong>{review.name || 'Anonymous'}</strong>
+                <Rating value={review.rating || 0} />
+                <p>{review.createdAt?.substring(0, 10) || 'Unknown date'}</p>
+                <p>{review.comment || 'No comment'}</p>
               </ListGroup.Item>
             ))}
 
