@@ -54,11 +54,10 @@ export class UserService {
     const token = jwt.sign({ userId }, this.ensureJwtSecret(), {
       expiresIn: '30d',
     });
-    const isProduction = this.config.get('NODE_ENV') === 'production';
     res.cookie('jwt', token, {
       httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? 'none' : 'lax',
+      secure: false,
+      sameSite: 'lax',
       path: '/',
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
@@ -102,11 +101,10 @@ export class UserService {
   }
 
   logout(res: Response): { message: string } {
-    const isProduction = this.config.get('NODE_ENV') === 'production';
     res.cookie('jwt', '', {
       httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? 'none' : 'lax',
+      secure: false,
+      sameSite: 'lax',
       path: '/',
       expires: new Date(0),
     });
