@@ -32,24 +32,7 @@ async function bootstrap() {
     }),
   );
 
-  if (process.env.NODE_ENV === 'production') {
-    server.use(express.static(path.join(rootDir, '/client/dist')));
-    server.get(
-      '*',
-      (
-        req: express.Request,
-        res: express.Response,
-        next: express.NextFunction,
-      ) => {
-        if (req.path.startsWith('/api')) return next();
-        return res.sendFile(path.join(rootDir, '/client/dist/index.html'));
-      },
-    );
-  } else {
-    server.get('/', (_req: express.Request, res: express.Response) =>
-      res.send('API is running...'),
-    );
-  }
+  server.get('/', (_req, res) => res.send('API is running...'));
 
   const port = process.env.PORT || 3000;
   await app.listen(port);
