@@ -54,10 +54,12 @@ export class UserService {
     const token = jwt.sign({ userId }, this.ensureJwtSecret(), {
       expiresIn: '30d',
     });
+    const isProduction = this.config.get('NODE_ENV') === 'production';
     res.cookie('jwt', token, {
       httpOnly: true,
-      secure: this.config.get('NODE_ENV') === 'production',
-      sameSite: 'strict',
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+      path: '/',
       maxAge: 30 * 24 * 60 * 60 * 1000,
     });
   }
@@ -100,7 +102,14 @@ export class UserService {
   }
 
   logout(res: Response): { message: string } {
-    res.cookie('jwt', '', { httpOnly: true, expires: new Date(0) });
+    const isProduction = this.config.get('NODE_ENV') === 'production';
+    res.cookie('jwt', '', {
+      httpOnly: true,
+      secure: isProduction,
+      sameSite: isProduction ? 'none' : 'lax',
+      path: '/',
+      expires: new Date(0),
+    });
     return { message: 'Logged out successfully!' };
   }
 
