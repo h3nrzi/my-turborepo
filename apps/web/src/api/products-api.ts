@@ -1,6 +1,6 @@
-import apiSlice from "../store/api-slice";
-import type Product from "../types/Product";
-import { PRODUCT_URL, UPLOAD_URL } from "../utils/constants";
+import apiSlice from '../store/api-slice';
+import type Product from '../types/Product';
+import { PRODUCT_URL, UPLOAD_URL } from '../utils/constants';
 
 interface Req {
   GetAll: { pageNumber?: number; keyword?: string };
@@ -29,69 +29,75 @@ const productsApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Queries
 
-    getAllProducts: builder.query<Res["GetAll"], Req["GetAll"]>({
+    getAllProducts: builder.query<Res['GetAll'], Req['GetAll']>({
       query: ({ pageNumber, keyword }) => ({
         url: PRODUCT_URL,
         params: { pageNumber, keyword },
       }),
-      providesTags: ["Products"],
+      providesTags: ['Products'],
     }),
 
-    getProduct: builder.query<Res["GetOne"], Req["GetOne"]>({
+    getProduct: builder.query<Res['GetOne'], Req['GetOne']>({
       query: ({ productId }) => ({
         url: `${PRODUCT_URL}/${productId}`,
       }),
-      providesTags: ["Products"],
+      providesTags: ['Products'],
     }),
 
-    getTopProducts: builder.query<Res["TopProducts"], Req["TopProducts"]>({
+    getTopProducts: builder.query<Res['TopProducts'], Req['TopProducts']>({
       query: () => ({ url: `${PRODUCT_URL}/top` }),
     }),
 
     // Mutations
 
-    createProduct: builder.mutation<Res["Create"], Req["Create"]>({
+    createProduct: builder.mutation<Res['Create'], Req['Create']>({
       query: ({ data }) => ({
         url: PRODUCT_URL,
-        method: "POST",
+        method: 'POST',
         body: data,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ['Products'],
     }),
 
-    updateProduct: builder.mutation<Res["Update"], Req["Update"]>({
+    updateProduct: builder.mutation<Res['Update'], Req['Update']>({
       query: ({ productId, data }) => ({
         url: `${PRODUCT_URL}/${productId}`,
-        method: "PATCH",
+        method: 'PATCH',
         body: data,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ['Products'],
     }),
 
-    deleteProduct: builder.mutation<Res["Delete"], Req["Delete"]>({
+    deleteProduct: builder.mutation<Res['Delete'], Req['Delete']>({
       query: ({ productId }) => ({
         url: `${PRODUCT_URL}/${productId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ['Products'],
     }),
 
-    uploadProductImage: builder.mutation<Res["UploadImage"], Req["UploadImage"]>({
+    uploadProductImage: builder.mutation<
+      Res['UploadImage'],
+      Req['UploadImage']
+    >({
       query: (formData) => ({
         url: UPLOAD_URL,
-        method: "POST",
+        method: 'POST',
         body: formData,
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ['Products'],
     }),
 
-    createProductReview: builder.mutation<Res["CreateReview"], Req["CreateReview"]>({
+    createProductReview: builder.mutation<
+      Res['CreateReview'],
+      Req['CreateReview']
+    >({
       query: ({ comment, rating, productId }) => ({
         url: `${PRODUCT_URL}/${productId}/review`,
-        method: "POST",
+        method: 'POST',
         body: { comment, rating, productId },
       }),
-      invalidatesTags: ["Products"],
+      invalidatesTags: ['Products'],
     }),
   }),
 });

@@ -1,12 +1,12 @@
-import { FormEvent, useEffect, useRef } from "react";
-import { Button, Col, Form } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { savePaymentMethod } from "../app/cart-slice";
-import CheckoutSteps from "../components/common/CheckoutSteps";
-import FormContainer from "../components/common/FormContainer";
-import { RootState } from "../store";
+import { FormEvent, useEffect, useRef } from 'react';
+import { Button, Col, Form } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { savePaymentMethod } from '../app/cart-slice';
+import CheckoutSteps from '../components/common/CheckoutSteps';
+import FormContainer from '../components/common/FormContainer';
+import { RootState } from '../store';
 
 const PaymentPage = () => {
   const ref = useRef<HTMLInputElement>(null);
@@ -16,15 +16,17 @@ const PaymentPage = () => {
 
   useEffect(() => {
     if (!shippingAddress) {
-      navigate("/shipping");
-      toast.warn("Please fill out the shipping address", { position: "top-center" });
+      navigate('/shipping');
+      toast.warn('Please fill out the shipping address', {
+        position: 'top-center',
+      });
     }
   }, [shippingAddress, navigate]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(savePaymentMethod(ref.current?.value));
-    navigate("/placeorder");
+    navigate('/placeorder');
   };
 
   return (

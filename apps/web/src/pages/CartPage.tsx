@@ -1,14 +1,14 @@
-import { Card, Col, ListGroup, Row } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { addToCart, removeFromCart } from "../app/cart-slice";
-import CartItem from "../components/CartItem";
-import CartSummary from "../components/CartSummary";
-import Message from "../components/common/Message";
-import { RootState } from "../store";
-import Product from "../types/Product";
-import CheckoutSteps from "../components/common/CheckoutSteps";
+import { Card, Col, ListGroup, Row } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { addToCart, removeFromCart } from '../app/cart-slice';
+import CartItem from '../components/CartItem';
+import CartSummary from '../components/CartSummary';
+import Message from '../components/common/Message';
+import { RootState } from '../store';
+import Product from '../types/Product';
+import CheckoutSteps from '../components/common/CheckoutSteps';
 
 const CartPage = () => {
   const dispatch = useDispatch();
@@ -17,16 +17,16 @@ const CartPage = () => {
 
   const addToCartHandler = (item: Product, qty: number) => {
     dispatch(addToCart({ ...item, qty }));
-    toast.success("Quantity updated successfully.", { position: "top-center" });
+    toast.success('Quantity updated successfully.', { position: 'top-center' });
   };
 
   const removeFromCartHandler = (_id: string) => {
     dispatch(removeFromCart({ _id }));
-    toast.success("Product remove from cart.", { position: "top-center" });
+    toast.success('Product remove from cart.', { position: 'top-center' });
   };
 
   const checkoutHandler = () => {
-    navigate("/login?isprivate=true&redirect=/shipping");
+    navigate('/login?isprivate=true&redirect=/shipping');
   };
 
   return (

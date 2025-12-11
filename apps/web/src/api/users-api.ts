@@ -1,6 +1,6 @@
-import apiSlice from "../store/api-slice";
-import type { UserInfo } from "../types/Auth";
-import { USERS_URL } from "../utils/constants";
+import apiSlice from '../store/api-slice';
+import type { UserInfo } from '../types/Auth';
+import { USERS_URL } from '../utils/constants';
 
 interface Req {
   GetAll: void;
@@ -26,62 +26,64 @@ interface Res {
 const usersApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Queries
-    getAllUser: builder.query<Res["GetAll"], Req["GetAll"]>({
+    getAllUser: builder.query<Res['GetAll'], Req['GetAll']>({
       query: () => ({ url: USERS_URL }),
-      providesTags: ["Users"],
+      providesTags: ['Users'],
     }),
 
-    getUser: builder.query<Res["GetOne"], Req["GetOne"]>({
+    getUser: builder.query<Res['GetOne'], Req['GetOne']>({
       query: ({ userId }) => ({ url: `${USERS_URL}/${userId}` }),
     }),
 
     // Mutations
-    register: builder.mutation<Res["Register"], Req["Register"]>({
+    register: builder.mutation<Res['Register'], Req['Register']>({
       query: (data) => ({
         url: `${USERS_URL}/register`,
-        method: "POST",
+        method: 'POST',
         body: data,
       }),
     }),
 
-    login: builder.mutation<Res["Login"], Req["Login"]>({
+    login: builder.mutation<Res['Login'], Req['Login']>({
       query: (data) => ({
         url: `${USERS_URL}/auth`,
-        method: "POST",
+        method: 'POST',
         body: data,
       }),
     }),
 
-    logout: builder.mutation<Res["Logout"], void>({
+    logout: builder.mutation<Res['Logout'], void>({
       query: () => ({
         url: `${USERS_URL}/logout`,
-        method: "POST",
+        method: 'POST',
       }),
     }),
 
-    updateProfile: builder.mutation<Res["UpdateProfile"], Req["UpdateProfile"]>({
-      query: (data) => ({
-        url: `${USERS_URL}/profile`,
-        method: "PATCH",
-        body: data,
-      }),
-    }),
+    updateProfile: builder.mutation<Res['UpdateProfile'], Req['UpdateProfile']>(
+      {
+        query: (data) => ({
+          url: `${USERS_URL}/profile`,
+          method: 'PATCH',
+          body: data,
+        }),
+      },
+    ),
 
-    deleteUser: builder.mutation<Res["Delete"], Req["Delete"]>({
+    deleteUser: builder.mutation<Res['Delete'], Req['Delete']>({
       query: ({ userId }) => ({
         url: `${USERS_URL}/${userId}`,
-        method: "DELETE",
+        method: 'DELETE',
       }),
-      invalidatesTags: ["Users", "Orders", "MyOrders"],
+      invalidatesTags: ['Users', 'Orders', 'MyOrders'],
     }),
 
-    updateUser: builder.mutation<Res["Update"], Req["Update"]>({
+    updateUser: builder.mutation<Res['Update'], Req['Update']>({
       query: ({ userId, data }) => ({
         url: `${USERS_URL}/${userId}`,
-        method: "PATCH",
+        method: 'PATCH',
         body: data,
       }),
-      invalidatesTags: ["Users"],
+      invalidatesTags: ['Users'],
     }),
   }),
 });

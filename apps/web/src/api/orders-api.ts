@@ -1,8 +1,8 @@
-import apiSlice from "../store/api-slice";
-import type Cart from "../types/Cart";
-import type Order from "../types/Order";
-import type { PaymentResult } from "../types/Order";
-import { ORDER_URL, PAYPAL_URL } from "../utils/constants";
+import apiSlice from '../store/api-slice';
+import type Cart from '../types/Cart';
+import type Order from '../types/Order';
+import type { PaymentResult } from '../types/Order';
+import { ORDER_URL, PAYPAL_URL } from '../utils/constants';
 
 interface Req {
   GetOrder: { orderId?: string };
@@ -25,69 +25,74 @@ const orderApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // Queries
 
-    getAllOrders: builder.query<Res["GetAllOrders"], void>({
+    getAllOrders: builder.query<Res['GetAllOrders'], void>({
       query: () => ({ url: ORDER_URL }),
-      providesTags: ["Orders"],
+      providesTags: ['Orders'],
     }),
 
-    getOrder: builder.query<Res["GetOrder"], Req["GetOrder"]>({
+    getOrder: builder.query<Res['GetOrder'], Req['GetOrder']>({
       query: ({ orderId }) => ({ url: `${ORDER_URL}/${orderId}` }),
-      providesTags: (_result, _error, { orderId }) => [{ type: "Orders", id: orderId }],
+      providesTags: (_result, _error, { orderId }) => [
+        { type: 'Orders', id: orderId },
+      ],
     }),
 
-    getMyOrders: builder.query<Res["GetMyOrders"], void>({
+    getMyOrders: builder.query<Res['GetMyOrders'], void>({
       query: () => ({ url: `${ORDER_URL}/myorders` }),
-      providesTags: ["MyOrders"],
+      providesTags: ['MyOrders'],
     }),
 
-    getPayPalClientId: builder.query<Res["GetPayPalClientId"], void>({
+    getPayPalClientId: builder.query<Res['GetPayPalClientId'], void>({
       query: () => ({ url: PAYPAL_URL }),
     }),
 
     // Mutations
 
-    createOrder: builder.mutation<Res["CreateOrder"], Req["CreateOrder"]>({
+    createOrder: builder.mutation<Res['CreateOrder'], Req['CreateOrder']>({
       query: (data) => ({
         url: ORDER_URL,
-        method: "POST",
+        method: 'POST',
         body: data,
       }),
-      invalidatesTags: ["Orders", "MyOrders"],
+      invalidatesTags: ['Orders', 'MyOrders'],
     }),
 
-    updateOrderToPaid: builder.mutation<Res["UpdateOrderToPaid"], Req["UpdateOrderToPaid"]>({
+    updateOrderToPaid: builder.mutation<
+      Res['UpdateOrderToPaid'],
+      Req['UpdateOrderToPaid']
+    >({
       query: ({ orderId, details }) => {
         const payload = {
-          id: details?.id ?? "",
-          status: details?.status ?? "COMPLETED",
+          id: details?.id ?? '',
+          status: details?.status ?? 'COMPLETED',
           update_time: details?.update_time ?? new Date().toISOString(),
-          payer: details?.payer ?? { email_address: "" },
+          payer: details?.payer ?? { email_address: '' },
         };
         return {
           url: `${ORDER_URL}/${orderId}/pay`,
-          method: "PATCH",
+          method: 'PATCH',
           body: payload,
         };
       },
       invalidatesTags: (_res, _err, { orderId }) => [
-        "Orders",
-        "MyOrders",
-        { type: "Orders", id: orderId },
+        'Orders',
+        'MyOrders',
+        { type: 'Orders', id: orderId },
       ],
     }),
 
     updateOrderToDeliver: builder.mutation<
-      Res["UpdateOrderToDeliver"],
-      Req["UpdateOrderToDeliver"]
+      Res['UpdateOrderToDeliver'],
+      Req['UpdateOrderToDeliver']
     >({
       query: ({ orderId }) => ({
         url: `${ORDER_URL}/${orderId}/deliver`,
-        method: "PATCH",
+        method: 'PATCH',
       }),
       invalidatesTags: (_res, _err, { orderId }) => [
-        "Orders",
-        "MyOrders",
-        { type: "Orders", id: orderId },
+        'Orders',
+        'MyOrders',
+        { type: 'Orders', id: orderId },
       ],
     }),
   }),

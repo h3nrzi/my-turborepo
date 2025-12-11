@@ -1,5 +1,5 @@
-import { Button, Card, ListGroup } from "react-bootstrap";
-import Product from "../types/Product";
+import { Button, Card, ListGroup } from 'react-bootstrap';
+import Product from '../types/Product';
 
 interface CartSummaryProps {
   orderItems: Product[];
@@ -8,7 +8,9 @@ interface CartSummaryProps {
 
 const CartSummary = ({ orderItems, onCheckout }: CartSummaryProps) => {
   const itemCount = orderItems.reduce((acc, item) => acc + item.qty, 0);
-  const totalPrice = orderItems.reduce((acc, item) => acc + item.price * item.qty, 0).toFixed(2);
+  const totalPrice = orderItems
+    .reduce((acc, item) => acc + item.price * item.qty, 0)
+    .toFixed(2);
 
   return (
     <Card>
@@ -27,7 +29,8 @@ const CartSummary = ({ orderItems, onCheckout }: CartSummaryProps) => {
             type="button"
             className="w-100 text-white"
             disabled={orderItems.length === 0}
-            onClick={onCheckout}>
+            onClick={onCheckout}
+          >
             Proceed To Checkout
           </Button>
         </ListGroup.Item>

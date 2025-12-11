@@ -1,5 +1,5 @@
-import { PropsWithChildren } from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { PropsWithChildren } from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const FormContainer = ({ children }: PropsWithChildren) => {
   return (

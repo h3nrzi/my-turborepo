@@ -1,27 +1,36 @@
-import { Fragment, useEffect } from "react";
-import { Button, Card, Col, Image, ListGroup, Row, Spinner } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useCreateOrderMutation } from "../api/orders-api";
-import { resetCart } from "../app/cart-slice";
-import CheckoutSteps from "../components/common/CheckoutSteps";
-import Message from "../components/common/Message";
-import { RootState } from "../store";
-import Cart, { ShippingAddress } from "../types/Cart";
-import Product from "../types/Product";
+import { Fragment, useEffect } from 'react';
+import {
+  Button,
+  Card,
+  Col,
+  Image,
+  ListGroup,
+  Row,
+  Spinner,
+} from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useCreateOrderMutation } from '../api/orders-api';
+import { resetCart } from '../app/cart-slice';
+import CheckoutSteps from '../components/common/CheckoutSteps';
+import Message from '../components/common/Message';
+import { RootState } from '../store';
+import Cart, { ShippingAddress } from '../types/Cart';
+import Product from '../types/Product';
 
 export default function PlaceOrderPage() {
   const cart = useSelector((s: RootState) => s.cart);
   const paymentMethod = useSelector((s: RootState) => s.cart.paymentMethod);
-  const [createOrder, { isLoading: createOrderLoading }] = useCreateOrderMutation();
+  const [createOrder, { isLoading: createOrderLoading }] =
+    useCreateOrderMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!paymentMethod) {
-      toast.warn("Please enter a payment method!", { position: "top-center" });
-      navigate("/payment");
+      toast.warn('Please enter a payment method!', { position: 'top-center' });
+      navigate('/payment');
     }
   }, [navigate, paymentMethod]);
 
@@ -32,7 +41,10 @@ export default function PlaceOrderPage() {
       navigate(`/order/${res._id}`);
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      if (error) toast.error(error?.data?.message || error.error, { position: "top-center" });
+      if (error)
+        toast.error(error?.data?.message || error.error, {
+          position: 'top-center',
+        });
     }
   };
 
@@ -68,8 +80,8 @@ const ShippingInfo = ({ shippingAddress }: ShippingInfoProps) => (
     <h2 className="fw-bold">Shipping</h2>
     <p>
       <strong className="me-1">Address:</strong>
-      {shippingAddress?.address}, {shippingAddress?.city}, {shippingAddress?.postalCode},{" "}
-      {shippingAddress?.country}
+      {shippingAddress?.address}, {shippingAddress?.city},{' '}
+      {shippingAddress?.postalCode}, {shippingAddress?.country}
     </p>
   </ListGroup.Item>
 );
@@ -125,7 +137,11 @@ interface OrderSummaryProps {
   createOrderLoading: boolean;
 }
 
-const OrderSummary = ({ cart, onPlaceOrder, createOrderLoading }: OrderSummaryProps) => (
+const OrderSummary = ({
+  cart,
+  onPlaceOrder,
+  createOrderLoading,
+}: OrderSummaryProps) => (
   <Card>
     <ListGroup variant="flush">
       <ListGroup.Item>
@@ -159,7 +175,8 @@ const OrderSummary = ({ cart, onPlaceOrder, createOrderLoading }: OrderSummaryPr
         <Button
           className="text-white w-100"
           disabled={cart.orderItems.length === 0}
-          onClick={onPlaceOrder}>
+          onClick={onPlaceOrder}
+        >
           Place Order
           {createOrderLoading && <Spinner size="sm" className="ms-2" />}
         </Button>

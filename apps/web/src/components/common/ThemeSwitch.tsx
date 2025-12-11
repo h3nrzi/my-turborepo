@@ -1,5 +1,5 @@
-import { Form } from "react-bootstrap";
-import useTheme from "../../theme/useTheme";
+import { Form } from 'react-bootstrap';
+import useTheme from '../../theme/useTheme';
 
 const ThemeSwitch = () => {
   const { theme, toggleTheme } = useTheme();
@@ -8,9 +8,9 @@ const ThemeSwitch = () => {
     <Form.Check
       type="switch"
       id="theme-switch"
-      checked={theme === "dark"}
+      checked={theme === 'dark'}
       onChange={toggleTheme}
-      style={{ fontSize: "1.8rem" }}
+      style={{ fontSize: '1.8rem' }}
     />
   );
 };

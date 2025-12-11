@@ -4,24 +4,24 @@ import {
   PayPalButtonsComponentProps,
   SCRIPT_LOADING_STATE,
   usePayPalScriptReducer,
-} from "@paypal/react-paypal-js";
-import moment from "moment";
-import { FC, Fragment, useEffect } from "react";
-import { Button, Card, Col, Image, ListGroup, Row } from "react-bootstrap";
-import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+} from '@paypal/react-paypal-js';
+import moment from 'moment';
+import { FC, Fragment, useEffect } from 'react';
+import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import {
   useGetOrderQuery,
   useGetPayPalClientIdQuery,
   useUpdateOrderToDeliverMutation,
   useUpdateOrderToPaidMutation,
-} from "../api/orders-api";
-import Loader from "../components/common/Loader";
-import Message from "../components/common/Message";
-import { RootState } from "../store";
-import Order from "../types/Order";
-import getErrorMessage from "../utils/getErrorMessage";
+} from '../api/orders-api';
+import Loader from '../components/common/Loader';
+import Message from '../components/common/Message';
+import { RootState } from '../store';
+import Order from '../types/Order';
+import getErrorMessage from '../utils/getErrorMessage';
 
 export default function OrderPage() {
   const { id: orderId } = useParams();
@@ -41,15 +41,21 @@ export default function OrderPage() {
   const [{ isPending }, paypalDispatch] = usePayPalScriptReducer();
   const [updateOrderToPaidMutation, { isLoading: updateOrderToPaidLoading }] =
     useUpdateOrderToPaidMutation();
-  const [updateOrderToDeliverMutation, { isLoading: updateOrderToDeliverLoading }] =
-    useUpdateOrderToDeliverMutation();
+  const [
+    updateOrderToDeliverMutation,
+    { isLoading: updateOrderToDeliverLoading },
+  ] = useUpdateOrderToDeliverMutation();
 
   useEffect(() => {
-    if (!payPalClientIdQueryError && !payPalClientIdQueryLoading && payPalClientId) {
+    if (
+      !payPalClientIdQueryError &&
+      !payPalClientIdQueryLoading &&
+      payPalClientId
+    ) {
       const loadPaypalScript = async () => {
         paypalDispatch({
           type: DISPATCH_ACTION.RESET_OPTIONS,
-          value: { clientId: payPalClientId.clientId, currency: "USD" },
+          value: { clientId: payPalClientId.clientId, currency: 'USD' },
         });
 
         paypalDispatch({
@@ -60,27 +66,38 @@ export default function OrderPage() {
 
       if (order && !order.isPaid) if (!window.paypal) loadPaypalScript();
     }
-  }, [payPalClientIdQueryError, payPalClientIdQueryLoading, payPalClientId, order, paypalDispatch]);
+  }, [
+    payPalClientIdQueryError,
+    payPalClientIdQueryLoading,
+    payPalClientId,
+    order,
+    paypalDispatch,
+  ]);
 
-  const onApprove: PayPalButtonsComponentProps["onApprove"] = async (_data, actions) => {
+  const onApprove: PayPalButtonsComponentProps['onApprove'] = async (
+    _data,
+    actions,
+  ) => {
     return actions.order?.capture().then(async (details) => {
       const payload = {
         id: details.id,
         status: details.status,
         update_time: details.update_time,
-        payer: details.payer ?? { email_address: userInfo?.email || "" },
+        payer: details.payer ?? { email_address: userInfo?.email || '' },
       };
       try {
         await updateOrderToPaidMutation({ orderId, details: payload }).unwrap();
         orderQueryRefetch();
-        toast.success("Payment successful!", {
-          onClick: () => navigate("/profile"),
-          position: "top-center",
-          style: { cursor: "pointer" },
+        toast.success('Payment successful!', {
+          onClick: () => navigate('/profile'),
+          position: 'top-center',
+          style: { cursor: 'pointer' },
         });
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
-        toast.error(error?.data?.message || error.error, { position: "top-center" });
+        toast.error(error?.data?.message || error.error, {
+          position: 'top-center',
+        });
       }
     });
   };
@@ -88,32 +105,37 @@ export default function OrderPage() {
   const onApproveTest = async () => {
     const details = {
       id: `TEST-${orderId}`,
-      status: "COMPLETED",
+      status: 'COMPLETED',
       update_time: new Date().toISOString(),
-      payer: { email_address: userInfo?.email || "test@example.com" },
+      payer: { email_address: userInfo?.email || 'test@example.com' },
     };
     try {
       await updateOrderToPaidMutation({ orderId, details }).unwrap();
       orderQueryRefetch();
-      toast.success("Payment successful!", {
-        onClick: () => navigate("/profile"),
-        position: "top-center",
-        style: { cursor: "pointer" },
+      toast.success('Payment successful!', {
+        onClick: () => navigate('/profile'),
+        position: 'top-center',
+        style: { cursor: 'pointer' },
       });
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error, { position: "top-center" });
+      toast.error(error?.data?.message || error.error, {
+        position: 'top-center',
+      });
     }
   };
 
-  const createOrder: PayPalButtonsComponentProps["createOrder"] = async (_data, actions) => {
+  const createOrder: PayPalButtonsComponentProps['createOrder'] = async (
+    _data,
+    actions,
+  ) => {
     return actions.order
       .create({
-        intent: "CAPTURE",
+        intent: 'CAPTURE',
         purchase_units: [
           {
             amount: {
-              currency_code: "USD",
+              currency_code: 'USD',
               value: order!.totalPrice.toString(),
             },
           },
@@ -122,23 +144,25 @@ export default function OrderPage() {
       .then((orderId) => orderId);
   };
 
-  const onError: PayPalButtonsComponentProps["onError"] = (err: unknown) => {
+  const onError: PayPalButtonsComponentProps['onError'] = (err: unknown) => {
     const error = err as { message?: string };
-    toast.error(error?.message, { position: "top-center" });
+    toast.error(error?.message, { position: 'top-center' });
   };
 
   const deliverOrderHandler = async () => {
     try {
       await updateOrderToDeliverMutation({ orderId });
       orderQueryRefetch();
-      toast.success("Order has been delivered", {
-        onClick: () => navigate("/admin/order-list"),
-        position: "top-center",
-        style: { cursor: "pointer" },
+      toast.success('Order has been delivered', {
+        onClick: () => navigate('/admin/order-list'),
+        position: 'top-center',
+        style: { cursor: 'pointer' },
       });
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error, { position: "top-center" });
+      toast.error(error?.data?.message || error.error, {
+        position: 'top-center',
+      });
     }
   };
 
@@ -157,7 +181,7 @@ export default function OrderPage() {
             <Card>
               <ListGroup variant="flush">
                 <OrderSummary order={order} />
-                {!order?.isPaid && userInfo?.email === "admin@gmail.com" && (
+                {!order?.isPaid && userInfo?.email === 'admin@gmail.com' && (
                   <ListGroup.Item>
                     {isPending ? (
                       <Loader />
@@ -178,14 +202,17 @@ export default function OrderPage() {
                     />
                   </ListGroup.Item>
                 )}
-                {userInfo && userInfo.isAdmin && order?.isPaid && !order?.isDelivered && (
-                  <ListGroup.Item>
-                    <MarkAsDeliveredButton
-                      isLoading={updateOrderToDeliverLoading}
-                      onDeliverOrder={deliverOrderHandler}
-                    />
-                  </ListGroup.Item>
-                )}
+                {userInfo &&
+                  userInfo.isAdmin &&
+                  order?.isPaid &&
+                  !order?.isDelivered && (
+                    <ListGroup.Item>
+                      <MarkAsDeliveredButton
+                        isLoading={updateOrderToDeliverLoading}
+                        onDeliverOrder={deliverOrderHandler}
+                      />
+                    </ListGroup.Item>
+                  )}
               </ListGroup>
             </Card>
           </Col>
@@ -219,11 +246,12 @@ const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
         </p>
         <p>
           <strong className="me-1">Order at:</strong>
-          {moment(order?.createdAt).format("dddd - MMMM Do YYYY - h:mm a")}
+          {moment(order?.createdAt).format('dddd - MMMM Do YYYY - h:mm a')}
         </p>
         {order?.isDelivered ? (
           <Message variant="success">
-            Delivered on: {moment(order.deliveredAt!).format("dddd - MMMM Do YYYY - h:mm a")}
+            Delivered on:{' '}
+            {moment(order.deliveredAt!).format('dddd - MMMM Do YYYY - h:mm a')}
           </Message>
         ) : (
           <Message variant="danger">Not Delivered!</Message>
@@ -235,7 +263,8 @@ const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
         <p>{order?.paymentMethod}</p>
         {order?.isPaid ? (
           <Message variant="success">
-            Paid on: {moment(order.paidAt!).format("dddd - MMMM Do YYYY - h:mm a")}
+            Paid on:{' '}
+            {moment(order.paidAt!).format('dddd - MMMM Do YYYY - h:mm a')}
           </Message>
         ) : (
           <Message variant="danger">Not Paid!</Message>
@@ -314,7 +343,11 @@ const TestPaymentButton: FC<PaymentButtonsProps> = ({
   updateOrderToPaidLoading,
 }) => {
   return (
-    <Button variant="success" className="text-white mb-2 w-100" onClick={onApproveTest}>
+    <Button
+      variant="success"
+      className="text-white mb-2 w-100"
+      onClick={onApproveTest}
+    >
       PAY ORDER
       {updateOrderToPaidLoading && <Loader size="sm" />}
     </Button>
@@ -326,9 +359,16 @@ interface MarkAsDeliveredButtonProps {
   onDeliverOrder: () => void;
 }
 
-const MarkAsDeliveredButton = ({ isLoading, onDeliverOrder }: MarkAsDeliveredButtonProps) => {
+const MarkAsDeliveredButton = ({
+  isLoading,
+  onDeliverOrder,
+}: MarkAsDeliveredButtonProps) => {
   return (
-    <Button className="w-100 text-white" variant="warning" onClick={onDeliverOrder}>
+    <Button
+      className="w-100 text-white"
+      variant="warning"
+      onClick={onDeliverOrder}
+    >
       Mark as Delivered
       {isLoading && <Loader size="sm" />}
     </Button>

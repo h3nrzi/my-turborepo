@@ -1,7 +1,7 @@
-import { Button, Col, Form, Image, Row } from "react-bootstrap";
-import { FaTrash } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import Product from "../types/Product";
+import { Button, Col, Form, Image, Row } from 'react-bootstrap';
+import { FaTrash } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import Product from '../types/Product';
 
 interface CartItemProps {
   item: Product;
@@ -23,7 +23,8 @@ const CartItem = ({ item, onAddToCart, onRemoveFromCart }: CartItemProps) => {
         <Form.Control
           as="select"
           value={item.qty}
-          onChange={(e) => onAddToCart(item, +e.target.value)}>
+          onChange={(e) => onAddToCart(item, +e.target.value)}
+        >
           {Array.from({ length: item.countInStock })
             .map((_, i) => i + 1)
             .map((num) => (
@@ -37,7 +38,8 @@ const CartItem = ({ item, onAddToCart, onRemoveFromCart }: CartItemProps) => {
         <Button
           variant="danger"
           className="text-white w-100"
-          onClick={() => onRemoveFromCart(item._id)}>
+          onClick={() => onRemoveFromCart(item._id)}
+        >
           <FaTrash size={23} />
         </Button>
       </Col>

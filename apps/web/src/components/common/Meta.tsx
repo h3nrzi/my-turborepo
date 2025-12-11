@@ -1,5 +1,5 @@
-import { FC } from "react";
-import { Helmet } from "react-helmet-async";
+import { FC } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 interface Props {
   title?: string;
@@ -8,9 +8,9 @@ interface Props {
 }
 
 const Meta: FC<Props> = ({
-  title = "Welcome to ProShop",
-  description = "we sell the best products for cheap",
-  keywords = "electronics, buy electronics, cheap electronics",
+  title = 'Welcome to ProShop',
+  description = 'we sell the best products for cheap',
+  keywords = 'electronics, buy electronics, cheap electronics',
 }) => {
   return (
     <Helmet>

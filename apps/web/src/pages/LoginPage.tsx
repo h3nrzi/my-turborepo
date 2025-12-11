@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { Button, Col, Form, Row, Spinner, Stack, Alert } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useLoginMutation } from "../api/users-api";
-import { setCredentials } from "../app/auth-slice";
-import FormContainer from "../components/common/FormContainer";
-import { RootState } from "../store";
+import { useEffect } from 'react';
+import { Button, Col, Form, Row, Spinner, Stack, Alert } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useLoginMutation } from '../api/users-api';
+import { setCredentials } from '../app/auth-slice';
+import FormContainer from '../components/common/FormContainer';
+import { RootState } from '../store';
 
 interface FormData {
   email: string;
@@ -23,13 +23,17 @@ const LoginPage = () => {
   const { search } = useLocation();
 
   const searchParams = new URLSearchParams(search);
-  const redirect = searchParams.get("redirect") || "/";
-  const isprivate = Boolean(searchParams.get("isprivate"));
-  const isAdmin = Boolean(searchParams.get("isAdmin"));
+  const redirect = searchParams.get('redirect') || '/';
+  const isprivate = Boolean(searchParams.get('isprivate'));
+  const isAdmin = Boolean(searchParams.get('isAdmin'));
 
   useEffect(() => {
-    if (isAdmin) toast.warn("Unauthorized to perform this action", { position: "top-center" });
-    if (!userInfo && isprivate) toast.warn("Please login first!", { position: "top-center" });
+    if (isAdmin)
+      toast.warn('Unauthorized to perform this action', {
+        position: 'top-center',
+      });
+    if (!userInfo && isprivate)
+      toast.warn('Please login first!', { position: 'top-center' });
     if (userInfo) navigate(redirect);
   }, [userInfo, redirect, navigate, isprivate, isAdmin]);
 
@@ -40,7 +44,9 @@ const LoginPage = () => {
       navigate(redirect);
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error?.error, { position: "top-center" });
+      toast.error(error?.data?.message || error?.error, {
+        position: 'top-center',
+      });
     }
   };
 
@@ -51,17 +57,26 @@ const LoginPage = () => {
         <Stack gap={3}>
           <Form.Group controlId="email">
             <Form.Label>Email Address</Form.Label>
-            <Form.Control type="email" placeholder="Enter Your Email..." {...register("email")} />
+            <Form.Control
+              type="email"
+              placeholder="Enter Your Email..."
+              {...register('email')}
+            />
           </Form.Group>
           <Form.Group controlId="password">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Enter Your Password..."
-              {...register("password")}
+              {...register('password')}
             />
           </Form.Group>
-          <Button type="submit" variant="primary" className="w-25" disabled={LoginLoading}>
+          <Button
+            type="submit"
+            variant="primary"
+            className="w-25"
+            disabled={LoginLoading}
+          >
             Sign In
             {LoginLoading && <Spinner size="sm" className="ms-2" />}
           </Button>
@@ -70,7 +85,10 @@ const LoginPage = () => {
       <Row className="py-3">
         <Col>
           New Customer?
-          <Link to={redirect ? `/register?redirect=${redirect}` : "/register"} className="ms-1">
+          <Link
+            to={redirect ? `/register?redirect=${redirect}` : '/register'}
+            className="ms-1"
+          >
             Register
           </Link>
         </Col>

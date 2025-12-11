@@ -1,17 +1,24 @@
-import { Badge, Container, Dropdown, Image, Nav, Navbar } from "react-bootstrap";
-import { FaRegUserCircle, FaShoppingCart, FaUser } from "react-icons/fa";
-import { MdAdminPanelSettings } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useLogoutMutation } from "../../api/users-api";
-import { clearCredentials } from "../../app/auth-slice";
-import { resetCart } from "../../app/cart-slice";
-import logo from "../../assets/logo.png";
-import { RootState } from "../../store";
-import { UserInfo } from "../../types/Auth";
-import ThemeSwitch from "../common/ThemeSwitch";
-import SearchBox from "../common/SearchBox";
+import {
+  Badge,
+  Container,
+  Dropdown,
+  Image,
+  Nav,
+  Navbar,
+} from 'react-bootstrap';
+import { FaRegUserCircle, FaShoppingCart, FaUser } from 'react-icons/fa';
+import { MdAdminPanelSettings } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { useLogoutMutation } from '../../api/users-api';
+import { clearCredentials } from '../../app/auth-slice';
+import { resetCart } from '../../app/cart-slice';
+import logo from '../../assets/logo.png';
+import { RootState } from '../../store';
+import { UserInfo } from '../../types/Auth';
+import ThemeSwitch from '../common/ThemeSwitch';
+import SearchBox from '../common/SearchBox';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -25,10 +32,10 @@ export default function Header() {
       await logoutMutation().unwrap();
       dispatch(clearCredentials());
       dispatch(resetCart());
-      navigate("/");
+      navigate('/');
       location.reload();
     } catch {
-      toast.error("some error occurred!", { position: "top-center" });
+      toast.error('some error occurred!', { position: 'top-center' });
     }
   };
 
@@ -83,14 +90,21 @@ export default function Header() {
   );
 }
 
-const ProfileDropdown = ({ userInfo, onLogout }: { userInfo: UserInfo; onLogout(): void }) => {
+const ProfileDropdown = ({
+  userInfo,
+  onLogout,
+}: {
+  userInfo: UserInfo;
+  onLogout(): void;
+}) => {
   return (
     <Dropdown>
       <Dropdown.Toggle
         id="dropdown-custom-components"
         size="sm"
         variant="secondary"
-        className="text-white">
+        className="text-white"
+      >
         <FaRegUserCircle size={30} />
       </Dropdown.Toggle>
       <Dropdown.Menu>
@@ -111,7 +125,8 @@ const AdminDropdown = () => {
         id="dropdown-custom-components"
         size="sm"
         variant="secondary"
-        className="text-white">
+        className="text-white"
+      >
         <MdAdminPanelSettings size={30} />
       </Dropdown.Toggle>
       <Dropdown.Menu>

@@ -1,8 +1,8 @@
-import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type Cart from "../types/Cart";
-import type Product from "../types/Product";
-import { updateCart } from "../utils/updateCart";
+import { createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import type Cart from '../types/Cart';
+import type Product from '../types/Product';
+import { updateCart } from '../utils/updateCart';
 
 const initialCartState: Cart = {
   orderItems: [],
@@ -14,16 +14,20 @@ const initialCartState: Cart = {
   paymentMethod: undefined,
 };
 
-const persistedCartState: Cart | null = JSON.parse(localStorage.getItem("cart")!);
+const persistedCartState: Cart | null = JSON.parse(
+  localStorage.getItem('cart')!,
+);
 const initialState: Cart = persistedCartState || initialCartState;
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState,
   reducers: {
     addToCart: (cart, action: PayloadAction<Product>): void => {
       const newItem = action.payload;
-      const existingItem = cart.orderItems.find((item) => item._id === newItem._id);
+      const existingItem = cart.orderItems.find(
+        (item) => item._id === newItem._id,
+      );
 
       if (existingItem) {
         cart.orderItems = cart.orderItems.map((item) =>
@@ -34,14 +38,16 @@ const cartSlice = createSlice({
       }
 
       cart = updateCart(cart);
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
     },
 
     removeFromCart: (cart, action: PayloadAction<{ _id: string }>) => {
-      cart.orderItems = cart.orderItems.filter((item) => item._id !== action.payload._id);
+      cart.orderItems = cart.orderItems.filter(
+        (item) => item._id !== action.payload._id,
+      );
 
       cart = updateCart(cart);
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
     },
 
     resetCart: (cart) => {
@@ -54,25 +60,30 @@ const cartSlice = createSlice({
       cart.paymentMethod = undefined;
 
       cart = updateCart(cart);
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
     },
 
     saveShippingAddress: (cart, action) => {
       cart.shippingAddress = action.payload;
 
       cart = updateCart(cart);
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
     },
 
     savePaymentMethod: (cart, action) => {
       cart.paymentMethod = action.payload;
 
       cart = updateCart(cart);
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
     },
   },
 });
 
-export const { addToCart, removeFromCart, resetCart, saveShippingAddress, savePaymentMethod } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeFromCart,
+  resetCart,
+  saveShippingAddress,
+  savePaymentMethod,
+} = cartSlice.actions;
 export default cartSlice;

@@ -1,16 +1,20 @@
-import _ from "lodash";
-import { Fragment } from "react";
-import { Button, Table } from "react-bootstrap";
-import { FaCheck, FaTimes } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import { useGetAllOrdersQuery } from "../../api/orders-api";
-import Loader from "../../components/common/Loader";
-import Message from "../../components/common/Message";
-import getErrorMessage from "../../utils/getErrorMessage";
-import Order from "../../types/Order";
+import _ from 'lodash';
+import { Fragment } from 'react';
+import { Button, Table } from 'react-bootstrap';
+import { FaCheck, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { useGetAllOrdersQuery } from '../../api/orders-api';
+import Loader from '../../components/common/Loader';
+import Message from '../../components/common/Message';
+import getErrorMessage from '../../utils/getErrorMessage';
+import Order from '../../types/Order';
 
 export default function OrderListPage() {
-  const { data: orders, isLoading: ordersLoading, error: ordersError } = useGetAllOrdersQuery();
+  const {
+    data: orders,
+    isLoading: ordersLoading,
+    error: ordersError,
+  } = useGetAllOrdersQuery();
 
   return (
     <Fragment>
@@ -45,7 +49,9 @@ const OrdersTable = ({ orders }: { orders?: Order[] }) => {
         {orders?.map((order) => (
           <tr key={order._id}>
             <td>
-              <Link to={`/order/${order._id}`}>{_.takeRight(order._id.split(""), 4).join("")}</Link>
+              <Link to={`/order/${order._id}`}>
+                {_.takeRight(order._id.split(''), 4).join('')}
+              </Link>
             </td>
             <td>{order.user?.name}</td>
             <td>{order.user?.email}</td>
@@ -53,14 +59,18 @@ const OrdersTable = ({ orders }: { orders?: Order[] }) => {
             <td>${order.totalPrice}</td>
             <td>
               {order.isPaid ? (
-                <span className=" text-success">{order.paidAt?.substring(0, 10)}</span>
+                <span className=" text-success">
+                  {order.paidAt?.substring(0, 10)}
+                </span>
               ) : (
                 <FaTimes color="red" />
               )}
             </td>
             <td>
               {order.isDelivered ? (
-                <span className=" text-success">{order.deliveredAt?.substring(0, 10)}</span>
+                <span className=" text-success">
+                  {order.deliveredAt?.substring(0, 10)}
+                </span>
               ) : (
                 <FaTimes color="red" />
               )}
@@ -70,7 +80,12 @@ const OrdersTable = ({ orders }: { orders?: Order[] }) => {
                 <FaCheck color="green" />
               ) : (
                 <Link to={`/order/${order._id}`}>
-                  <Button size="sm" as="span" variant="secondary" className="text-white">
+                  <Button
+                    size="sm"
+                    as="span"
+                    variant="secondary"
+                    className="text-white"
+                  >
                     Details
                   </Button>
                 </Link>

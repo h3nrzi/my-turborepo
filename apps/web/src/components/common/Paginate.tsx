@@ -1,6 +1,6 @@
-import { FC } from "react";
-import { Pagination } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { FC } from 'react';
+import { Pagination } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   isAdmin: boolean;
@@ -27,7 +27,8 @@ const Paginate: FC<Props> = ({ pages, page, isAdmin, keyword }) => {
             key={i + 1}
             active={i + 1 === page}
             onClick={() => handlePageChange(i + 1)}
-            className="cursor-pointer">
+            className="cursor-pointer"
+          >
             {i + 1}
           </Pagination.Item>
         ))}

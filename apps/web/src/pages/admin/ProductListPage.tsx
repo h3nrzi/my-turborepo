@@ -1,19 +1,22 @@
-import _ from "lodash";
-import { Fragment } from "react";
-import { Button, Col, Row, Table } from "react-bootstrap";
-import { FaEdit, FaTrash } from "react-icons/fa";
-import { Link, useSearchParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import { useDeleteProductMutation, useGetAllProductsQuery } from "../../api/products-api";
-import Loader from "../../components/common/Loader";
-import Message from "../../components/common/Message";
-import Product from "../../types/Product";
-import getErrorMessage from "../../utils/getErrorMessage";
-import Paginate from "../../components/common/Paginate";
+import _ from 'lodash';
+import { Fragment } from 'react';
+import { Button, Col, Row, Table } from 'react-bootstrap';
+import { FaEdit, FaTrash } from 'react-icons/fa';
+import { Link, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import {
+  useDeleteProductMutation,
+  useGetAllProductsQuery,
+} from '../../api/products-api';
+import Loader from '../../components/common/Loader';
+import Message from '../../components/common/Message';
+import Product from '../../types/Product';
+import getErrorMessage from '../../utils/getErrorMessage';
+import Paginate from '../../components/common/Paginate';
 
 export default function ProductListPage() {
   const [searchParams] = useSearchParams();
-  const pageNumber = Number(searchParams.get("page")) || 1;
+  const pageNumber = Number(searchParams.get('page')) || 1;
   const {
     data,
     isLoading: productsLoading,
@@ -21,17 +24,20 @@ export default function ProductListPage() {
     refetch: productsRefetch,
     isFetching: productsFetching,
   } = useGetAllProductsQuery({ pageNumber });
-  const [deleteProductMutation, { isLoading: deleteProductLoading }] = useDeleteProductMutation();
+  const [deleteProductMutation, { isLoading: deleteProductLoading }] =
+    useDeleteProductMutation();
 
   const deleteProductHandler = async (id: string) => {
-    if (window.confirm("Are you sure you want to delete")) {
+    if (window.confirm('Are you sure you want to delete')) {
       try {
         const res = await deleteProductMutation({ productId: id }).unwrap();
         productsRefetch();
-        toast.success(res.message, { position: "top-center" });
+        toast.success(res.message, { position: 'top-center' });
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
-        toast.error(error?.data?.message || error.error, { position: "top-center" });
+        toast.error(error?.data?.message || error.error, {
+          position: 'top-center',
+        });
       }
     }
   };
@@ -52,7 +58,10 @@ export default function ProductListPage() {
       ) : productsError ? (
         <Message variant="danger">{getErrorMessage(productsError)}</Message>
       ) : (
-        <ProductsTable products={data?.products} onDeleteProduct={deleteProductHandler} />
+        <ProductsTable
+          products={data?.products}
+          onDeleteProduct={deleteProductHandler}
+        />
       )}
     </Fragment>
   );
@@ -61,7 +70,10 @@ export default function ProductListPage() {
 const CreateNewProductButton = () => {
   return (
     <Link to="/admin/product/new">
-      <Button className="m-3 px-2 py-1 text-center text-white" variant="warning">
+      <Button
+        className="m-3 px-2 py-1 text-center text-white"
+        variant="warning"
+      >
         Create New Product
       </Button>
     </Link>
@@ -90,7 +102,13 @@ const ProductsTable = ({ products, onDeleteProduct }: ProductsTableProps) => {
       <tbody>
         {products?.map((product) => (
           <tr key={product._id}>
-            <td>{<Link to={`/product/${product._id}`}>{_.takeRight(product._id, 4)}</Link>}</td>
+            <td>
+              {
+                <Link to={`/product/${product._id}`}>
+                  {_.takeRight(product._id, 4)}
+                </Link>
+              }
+            </td>
             <td>{product.name}</td>
             <td>{`$${product.price}`}</td>
             <td>{product.category}</td>
@@ -105,7 +123,8 @@ const ProductsTable = ({ products, onDeleteProduct }: ProductsTableProps) => {
               <Button
                 variant="danger"
                 className="btn-sm ms-1"
-                onClick={() => onDeleteProduct(product._id)}>
+                onClick={() => onDeleteProduct(product._id)}
+              >
                 <FaTrash size={15} color="white" />
               </Button>
             </td>

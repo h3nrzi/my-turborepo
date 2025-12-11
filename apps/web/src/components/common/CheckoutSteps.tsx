@@ -1,5 +1,5 @@
-import { Nav } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Nav } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 interface Props {
   step1?: boolean;

@@ -1,16 +1,20 @@
-import { Carousel, Image, Placeholder } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useGetTopProductsQuery } from "../api/products-api";
-import getErrorMessage from "../utils/getErrorMessage";
-import Message from "./common/Message";
+import { Carousel, Image, Placeholder } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { useGetTopProductsQuery } from '../api/products-api';
+import getErrorMessage from '../utils/getErrorMessage';
+import Message from './common/Message';
 
 const ProductCarousel = () => {
   const { data: products, isLoading, error } = useGetTopProductsQuery();
 
-  if (error) return <Message variant="danger">{getErrorMessage(error)}</Message>;
+  if (error)
+    return <Message variant="danger">{getErrorMessage(error)}</Message>;
 
   return (
-    <Carousel pause="hover" className="bg-secondary mb-5 rounded overflow-hidden">
+    <Carousel
+      pause="hover"
+      className="bg-secondary mb-5 rounded overflow-hidden"
+    >
       {isLoading
         ? Array.from({ length: 3 }).map((_, index) => (
             <Carousel.Item key={index}>
@@ -31,7 +35,9 @@ const ProductCarousel = () => {
                 <Image src={product.image} alt={product.name} fluid />
                 <Carousel.Caption className="pb-4">
                   <span className="fs-2">{product.name}</span>
-                  <span className="ms-3 fs-2 text-danger">${product.price}</span>
+                  <span className="ms-3 fs-2 text-danger">
+                    ${product.price}
+                  </span>
                 </Carousel.Caption>
               </Link>
             </Carousel.Item>

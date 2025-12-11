@@ -1,7 +1,15 @@
-import { FC, useState } from "react";
-import { Button, Card, Col, Form, Image, ListGroup, Row } from "react-bootstrap";
-import Product from "../types/Product";
-import Rating from "./common/Rating";
+import { FC, useState } from 'react';
+import {
+  Button,
+  Card,
+  Col,
+  Form,
+  Image,
+  ListGroup,
+  Row,
+} from 'react-bootstrap';
+import Product from '../types/Product';
+import Rating from './common/Rating';
 
 interface Props {
   product: Product;
@@ -23,7 +31,10 @@ const ProductDetail: FC<Props> = ({ product, onAddToCart }) => {
             <h3>{product.name}</h3>
           </ListGroup.Item>
           <ListGroup.Item>
-            <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+            <Rating
+              value={product.rating}
+              text={`${product.numReviews} reviews`}
+            />
           </ListGroup.Item>
           <ListGroup.Item>Description: {product.description}</ListGroup.Item>
         </ListGroup>
@@ -44,7 +55,9 @@ const ProductDetail: FC<Props> = ({ product, onAddToCart }) => {
               <Row>
                 <Col>Status:</Col>
                 <Col>
-                  <strong>{product.countInStock > 0 ? "In Stock" : "Out of Stock"}</strong>
+                  <strong>
+                    {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                  </strong>
                 </Col>
               </Row>
             </ListGroup.Item>
@@ -57,7 +70,8 @@ const ProductDetail: FC<Props> = ({ product, onAddToCart }) => {
                     <Form.Control
                       as="select"
                       value={qty}
-                      onChange={(e) => setQty(+e.currentTarget.value)}>
+                      onChange={(e) => setQty(+e.currentTarget.value)}
+                    >
                       {Array.from({ length: product.countInStock })
                         .map((_, i) => i + 1)
                         .map((num) => (
@@ -75,7 +89,8 @@ const ProductDetail: FC<Props> = ({ product, onAddToCart }) => {
               <Button
                 disabled={product.countInStock === 0}
                 className="w-100"
-                onClick={() => onAddToCart(qty)}>
+                onClick={() => onAddToCart(qty)}
+              >
                 Add To Cart
               </Button>
             </ListGroup.Item>

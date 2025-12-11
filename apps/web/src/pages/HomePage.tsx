@@ -1,22 +1,26 @@
-import { Col, Row } from "react-bootstrap";
-import { useSearchParams } from "react-router-dom";
-import { Fragment } from "react/jsx-runtime";
-import { useGetAllProductsQuery } from "../api/products-api";
-import Message from "../components/common/Message";
-import Paginate from "../components/common/Paginate";
-import ProductCard from "../components/ProductCard";
-import ProductCardSkeleton from "../components/ProductCardSkeleton";
-import getErrorMessage from "../utils/getErrorMessage";
-import ProductCarousel from "../components/ProductCarousel";
-import Meta from "../components/common/Meta";
+import { Col, Row } from 'react-bootstrap';
+import { useSearchParams } from 'react-router-dom';
+import { Fragment } from 'react/jsx-runtime';
+import { useGetAllProductsQuery } from '../api/products-api';
+import Message from '../components/common/Message';
+import Paginate from '../components/common/Paginate';
+import ProductCard from '../components/ProductCard';
+import ProductCardSkeleton from '../components/ProductCardSkeleton';
+import getErrorMessage from '../utils/getErrorMessage';
+import ProductCarousel from '../components/ProductCarousel';
+import Meta from '../components/common/Meta';
 
 const HomePage = () => {
   const [searchParams] = useSearchParams();
-  const pageNumber = Number(searchParams.get("page")) || 1;
-  const keyword = searchParams.get("q") || "";
-  const { data, isLoading, error, isFetching } = useGetAllProductsQuery({ pageNumber, keyword });
+  const pageNumber = Number(searchParams.get('page')) || 1;
+  const keyword = searchParams.get('q') || '';
+  const { data, isLoading, error, isFetching } = useGetAllProductsQuery({
+    pageNumber,
+    keyword,
+  });
 
-  if (data?.products.length === 0) return <Message variant="info">No products found</Message>;
+  if (data?.products.length === 0)
+    return <Message variant="info">No products found</Message>;
 
   return (
     <Fragment>
@@ -43,7 +47,12 @@ const HomePage = () => {
         )}
       </Row>
       <div className="my-3">
-        <Paginate isAdmin={false} page={data?.page} pages={data?.pages} keyword={keyword} />
+        <Paginate
+          isAdmin={false}
+          page={data?.page}
+          pages={data?.pages}
+          keyword={keyword}
+        />
       </div>
     </Fragment>
   );
