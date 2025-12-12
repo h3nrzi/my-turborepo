@@ -17,12 +17,12 @@ const CartPage = () => {
 
   const addToCartHandler = (item: Product, qty: number) => {
     dispatch(addToCart({ ...item, qty }));
-    toast.success('Quantity updated successfully.', { position: 'top-center' });
+    toast.success('تعداد با موفقیت به‌روزرسانی شد.', { position: 'top-center' });
   };
 
   const removeFromCartHandler = (_id: string) => {
     dispatch(removeFromCart({ _id }));
-    toast.success('Product remove from cart.', { position: 'top-center' });
+    toast.success('محصول از سبد خرید حذف شد.', { position: 'top-center' });
   };
 
   const checkoutHandler = () => {
@@ -33,10 +33,10 @@ const CartPage = () => {
     <Row>
       <CheckoutSteps step1 />
       <Col md={8}>
-        <h1 className="mb-5 fw-bold">Shopping Cart</h1>
+        <h1 className="mb-5 fw-bold">سبد خرید</h1>
         {orderItems.length === 0 ? (
           <Message variant="info">
-            Your cart is empty <Link to="/">Go Back</Link>
+            سبد خرید شما خالی است <Link to="/">بازگشت</Link>
           </Message>
         ) : (
           <ListGroup variant="flush">

@@ -20,13 +20,13 @@ const HomePage = () => {
   });
 
   if (data?.products.length === 0)
-    return <Message variant="info">No products found</Message>;
+    return <Message variant="info">محصولی یافت نشد</Message>;
 
   return (
     <Fragment>
       <Meta />
       {!keyword && <ProductCarousel />}
-      <h1 className="fw-bold">Latest Products</h1>
+      <h1 className="fw-bold">جدیدترین محصولات</h1>
       <Row>
         {isLoading || isFetching ? (
           <Fragment>

@@ -18,7 +18,7 @@ export default function OrderListPage() {
 
   return (
     <Fragment>
-      <h1 className="mb-5 fw-bold">Orders</h1>
+      <h1 className="mb-5 fw-bold">سفارش‌ها</h1>
       {ordersLoading ? (
         <Loader />
       ) : ordersError ? (
@@ -35,13 +35,13 @@ const OrdersTable = ({ orders }: { orders?: Order[] }) => {
     <Table responsive="lg" className="text-nowrap" bordered>
       <thead>
         <tr className="text-secondary font-monospace">
-          <th className="px-5 px-lg-0">Id</th>
-          <th className="px-5 px-lg-0">Name</th>
-          <th className="px-5 px-lg-0">Email</th>
-          <th className="px-5 px-lg-0">Date</th>
-          <th className="px-5 px-lg-0">Total Price</th>
-          <th className="px-5 px-lg-0">Paid</th>
-          <th className="px-5 px-lg-0">Delivered</th>
+          <th className="px-5 px-lg-0">شناسه</th>
+          <th className="px-5 px-lg-0">نام</th>
+          <th className="px-5 px-lg-0">ایمیل</th>
+          <th className="px-5 px-lg-0">تاریخ</th>
+          <th className="px-5 px-lg-0">مبلغ کل</th>
+          <th className="px-5 px-lg-0">پرداخت</th>
+          <th className="px-5 px-lg-0">تحویل</th>
           <th className="px-5 px-lg-0"></th>
         </tr>
       </thead>
@@ -56,7 +56,7 @@ const OrdersTable = ({ orders }: { orders?: Order[] }) => {
             <td>{order.user?.name}</td>
             <td>{order.user?.email}</td>
             <td>{order.createdAt.substring(0, 10)}</td>
-            <td>${order.totalPrice}</td>
+            <td>{order.totalPrice} $</td>
             <td>
               {order.isPaid ? (
                 <span className=" text-success">
@@ -86,7 +86,7 @@ const OrdersTable = ({ orders }: { orders?: Order[] }) => {
                     variant="secondary"
                     className="text-white"
                   >
-                    Details
+                    جزئیات
                   </Button>
                 </Link>
               )}

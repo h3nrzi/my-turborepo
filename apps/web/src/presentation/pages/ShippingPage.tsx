@@ -34,7 +34,7 @@ const ShippingPage = () => {
     setValue('postalCode', shippingAddress?.postalCode as string);
 
     if (orderItems.length === 0) {
-      toast.warn('Please pick a product', { position: 'top-center' });
+      toast.warn('لطفاً ابتدا محصولی را انتخاب کنید', { position: 'top-center' });
       navigate('/cart');
     }
   }, [orderItems, navigate, shippingAddress, setValue]);
@@ -47,55 +47,55 @@ const ShippingPage = () => {
   return (
     <FormContainer>
       <CheckoutSteps step1 step2 />
-      <h1 className="fw-bold">Shipping Address</h1>
+      <h1 className="fw-bold">آدرس ارسال</h1>
       <Form className="mt-5" onSubmit={handleSubmit(submitHandler)}>
         <Stack direction="vertical" gap={3}>
           <Form.Group controlId="address">
-            <Form.Label>Address</Form.Label>
+            <Form.Label>آدرس</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter your address..."
+              placeholder="آدرس خود را وارد کنید..."
               {...register('address', { required: true })}
             />
             {errors.address && (
-              <span className="text-danger">Address is required</span>
+              <span className="text-danger">آدرس الزامی است</span>
             )}
           </Form.Group>
           <Form.Group controlId="city">
-            <Form.Label>City</Form.Label>
+            <Form.Label>شهر</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter your city..."
+              placeholder="شهر خود را وارد کنید..."
               {...register('city', { required: true })}
             />
             {errors.city && (
-              <span className="text-danger">City is required</span>
+              <span className="text-danger">نام شهر الزامی است</span>
             )}
           </Form.Group>
           <Form.Group controlId="postalCode">
-            <Form.Label>Postal Code</Form.Label>
+            <Form.Label>کد پستی</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter your postal code..."
+              placeholder="کد پستی خود را وارد کنید..."
               {...register('postalCode', { required: true })}
             />
             {errors.postalCode && (
-              <span className="text-danger">Postal code is required</span>
+              <span className="text-danger">کد پستی الزامی است</span>
             )}
           </Form.Group>
           <Form.Group controlId="country">
-            <Form.Label>Country</Form.Label>
+            <Form.Label>کشور</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter your country..."
+              placeholder="کشور خود را وارد کنید..."
               {...register('country', { required: true })}
             />
             {errors.country && (
-              <span className="text-danger">Country code is required</span>
+              <span className="text-danger">نام کشور الزامی است</span>
             )}
           </Form.Group>
           <Button type="submit" variant="primary" className="w-25">
-            Continue
+            ادامه
           </Button>
         </Stack>
       </Form>

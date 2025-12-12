@@ -34,9 +34,9 @@ const UserListPage = () => {
   const [logoutMutation] = useLogoutMutation();
 
   async function deleteUserHandler(userId: string) {
-    const message = `Are you sure you want to delete ${
-      userInfo?._id === userId ? 'yourself' : 'this user'
-    }?`;
+    const message = `آیا از حذف ${
+      userInfo?._id === userId ? 'حساب خود' : 'این کاربر'
+    } مطمئن هستید؟`;
 
     if (window.confirm(message)) {
       try {
@@ -63,7 +63,7 @@ const UserListPage = () => {
 
   return (
     <Fragment>
-      <h1 className="mb-5 fw-bold">Users</h1>
+      <h1 className="mb-5 fw-bold">کاربران</h1>
       {usersLoading || deleteUserLoading ? (
         <Loader />
       ) : usersError ? (
@@ -90,10 +90,10 @@ const UsersTable: FC<UsersTableProps> = ({ users, userInfo, onDelete }) => {
     <Table responsive="lg" className="text-nowrap" bordered>
       <thead>
         <tr className="text-secondary font-monospace">
-          <th className="px-5 px-lg-0">Id</th>
-          <th className="px-5 px-lg-0">Name</th>
-          <th className="px-5 px-lg-0">Email</th>
-          <th className="px-5 px-lg-0">Admin</th>
+          <th className="px-5 px-lg-0">شناسه</th>
+          <th className="px-5 px-lg-0">نام</th>
+          <th className="px-5 px-lg-0">ایمیل</th>
+          <th className="px-5 px-lg-0">مدیر</th>
           <th className="px-5 px-lg-0"></th>
         </tr>
       </thead>

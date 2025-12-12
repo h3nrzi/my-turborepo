@@ -17,7 +17,7 @@ const PaymentPage = () => {
   useEffect(() => {
     if (!shippingAddress) {
       navigate('/shipping');
-      toast.warn('Please fill out the shipping address', {
+      toast.warn('لطفاً آدرس ارسال را تکمیل کنید', {
         position: 'top-center',
       });
     }
@@ -33,14 +33,14 @@ const PaymentPage = () => {
   return (
     <FormContainer>
       <CheckoutSteps step1 step2 step3 />
-      <h1 className="fw-bold">Payment Method</h1>
+      <h1 className="fw-bold">روش پرداخت</h1>
       <Form onSubmit={handleSubmit} className="mt-5">
         <Form.Group>
-          <Form.Label as="legend">Select Method</Form.Label>
+          <Form.Label as="legend">انتخاب روش</Form.Label>
           <Col>
             <Form.Check
               type="radio"
-              label="PayPal or Credit Card"
+              label="پی‌پال یا کارت بانکی"
               id="PayPal"
               required
               value="PayPal"
@@ -48,7 +48,7 @@ const PaymentPage = () => {
               ref={ref}
             />
             <Button type="submit" variant="primary" className="mt-3 w-25">
-              Continue
+              ادامه
             </Button>
           </Col>
         </Form.Group>

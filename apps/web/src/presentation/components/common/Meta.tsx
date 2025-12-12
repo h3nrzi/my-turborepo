@@ -8,9 +8,9 @@ interface Props {
 }
 
 const Meta: FC<Props> = ({
-  title = 'Welcome to ProShop',
-  description = 'we sell the best products for cheap',
-  keywords = 'electronics, buy electronics, cheap electronics',
+  title = 'به پروشاپ خوش آمدید',
+  description = 'بهترین کالاها را با قیمت مناسب خریداری کنید',
+  keywords = 'خرید آنلاین, لوازم الکترونیکی, پروشاپ',
 }) => {
   return (
     <Helmet>

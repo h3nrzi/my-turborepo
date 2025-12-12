@@ -50,7 +50,9 @@ const ProductEditPage = () => {
   const submitHandler: SubmitHandler<FormData> = async (data) => {
     try {
       await updateProductMutation({ productId, data });
-      toast.success('Product updated successfully', { position: 'top-center' });
+      toast.success('محصول با موفقیت به‌روزرسانی شد', {
+        position: 'top-center',
+      });
       navigate('/admin/product-list');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
@@ -84,21 +86,21 @@ const ProductEditPage = () => {
 
   return (
     <FormContainer>
-      <h1>Edit Product</h1>
+      <h1>ویرایش محصول</h1>
       <Form onSubmit={handleSubmit(submitHandler)}>
         <Stack gap={4} direction="vertical">
           <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
+            <Form.Label>نام</Form.Label>
             <Form.Control
               type="text"
-              {...register('name', { required: 'Name is required' })}
+              {...register('name', { required: 'نام الزامی است' })}
             />
             {errors.name && (
               <p className="text-danger">{errors.name.message}</p>
             )}
           </Form.Group>
           <Form.Group controlId="image">
-            <Form.Label>Image</Form.Label>{' '}
+            <Form.Label>تصویر</Form.Label>{' '}
             {uploadProductImageLoading && <Loader size="sm" />}
             <Stack gap={4} direction="horizontal">
               <Form.Control type="file" onChange={uploadFileHandler} />
@@ -107,23 +109,23 @@ const ProductEditPage = () => {
           </Form.Group>
           <Stack gap={4} direction="horizontal">
             <Form.Group controlId="category" className="flex-grow-1">
-              <Form.Label>Category</Form.Label>
+              <Form.Label>دسته‌بندی</Form.Label>
               <Form.Control
                 as="select"
-                {...register('category', { required: 'Category is required' })}
+                {...register('category', { required: 'انتخاب دسته‌بندی الزامی است' })}
               >
-                <option value="Electronics">Electronics</option>
-                <option value="Sample Category">Sample Category</option>
+                <option value="Electronics">الکترونیکی</option>
+                <option value="Sample Category">دسته نمونه</option>
               </Form.Control>
               {errors.category && (
                 <p className="text-danger">{errors.category.message}</p>
               )}
             </Form.Group>
             <Form.Group controlId="brand" className="flex-grow-1">
-              <Form.Label>Brand</Form.Label>
+              <Form.Label>برند</Form.Label>
               <Form.Control
                 as="select"
-                {...register('brand', { required: 'Brand is required' })}
+                {...register('brand', { required: 'انتخاب برند الزامی است' })}
               >
                 <option value="Apple">Apple</option>
                 <option value="Samsung">Samsung</option>
@@ -135,14 +137,14 @@ const ProductEditPage = () => {
           </Stack>
           <Stack direction="horizontal" gap={4}>
             <Form.Group controlId="price" className="flex-grow-1">
-              <Form.Label>Price</Form.Label>
+              <Form.Label>قیمت</Form.Label>
               <Form.Control
                 type="number"
                 min=".00"
                 step=".01"
                 {...register('price', {
                   valueAsNumber: true,
-                  required: 'Price is required',
+                  required: 'قیمت الزامی است',
                 })}
               />
               {errors.price && (
@@ -150,13 +152,13 @@ const ProductEditPage = () => {
               )}
             </Form.Group>
             <Form.Group controlId="countInStock" className="flex-grow-1">
-              <Form.Label>Count In Stock</Form.Label>
+              <Form.Label>موجودی</Form.Label>
               <Form.Control
                 type="number"
                 min="0"
                 {...register('countInStock', {
                   valueAsNumber: true,
-                  required: 'Count In Stock is required',
+                  required: 'تعیین موجودی الزامی است',
                 })}
               />
               {errors.countInStock && (
@@ -165,12 +167,12 @@ const ProductEditPage = () => {
             </Form.Group>
           </Stack>
           <Form.Group controlId="description">
-            <Form.Label>Description</Form.Label>
+            <Form.Label>توضیحات</Form.Label>
             <Form.Control
               as="textarea"
               rows={5}
               {...register('description', {
-                required: 'Description is required',
+                required: 'توضیحات الزامی است',
               })}
             />
             {errors.description && (
@@ -178,7 +180,7 @@ const ProductEditPage = () => {
             )}
           </Form.Group>
           <Button type="submit" variant="secondary" className="text-white">
-            Update {updateProductLoading && <Loader size="sm" />}
+            به‌روزرسانی {updateProductLoading && <Loader size="sm" />}
           </Button>
         </Stack>
       </Form>

@@ -38,9 +38,9 @@ export default function ProductPage() {
   async function submitHandler(data: FormData) {
     try {
       await createProductReviewMutation({ productId, ...data }).unwrap();
-      toast.success('Review submitted successfully!');
+      toast.success('نظر شما با موفقیت ثبت شد');
     } catch {
-      toast.error('Failed to submit review');
+      toast.error('ثبت نظر با مشکل روبه‌رو شد');
     }
   }
 
@@ -48,7 +48,7 @@ export default function ProductPage() {
     if (!product) return;
 
     if (existingCartItem && existingCartItem.qty === qty) {
-      toast('Product already in cart with same quantity!', {
+      toast('این محصول با همین تعداد در سبد موجود است!', {
         icon: '⚠️',
       });
       return;
@@ -56,16 +56,16 @@ export default function ProductPage() {
 
     if (existingCartItem && existingCartItem.qty !== qty) {
       dispatch(addToCart({ ...product, qty }));
-      toast.success('Cart quantity updated!');
+      toast.success('تعداد در سبد خرید به‌روزرسانی شد');
       return;
     }
 
     dispatch(addToCart({ ...product, qty }));
-    toast.success('Product added to cart!');
+    toast.success('محصول به سبد خرید اضافه شد');
   }
 
-  if (isLoading) return <div>Loading...</div>;
-  if (!product) return <div>Product not found</div>;
+  if (isLoading) return <div>در حال بارگذاری...</div>;
+  if (!product) return <div>محصولی یافت نشد</div>;
 
   return (
     <Container className="py-4">
@@ -93,7 +93,7 @@ export default function ProductPage() {
                 {'★'.repeat(Math.floor(product.rating))}
                 {'☆'.repeat(5 - Math.floor(product.rating))}
               </span>
-              <span className="text-muted">({product.numReviews} reviews)</span>
+              <span className="text-muted">({product.numReviews} نظر)</span>
             </div>
             <p className="lead text-muted mb-4">{product.description}</p>
           </div>
@@ -109,7 +109,7 @@ export default function ProductPage() {
                     bg={product.countInStock > 0 ? 'success' : 'danger'}
                     className="fs-6"
                   >
-                    {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                    {product.countInStock > 0 ? 'موجود' : 'ناموجود'}
                   </Badge>
                 </Col>
               </Row>
@@ -117,7 +117,7 @@ export default function ProductPage() {
               {product.countInStock > 0 && (
                 <Row className="mb-3">
                   <Col xs={4}>
-                    <Form.Label className="fw-semibold">Qty:</Form.Label>
+                    <Form.Label className="fw-semibold">تعداد:</Form.Label>
                   </Col>
                   <Col xs={8}>
                     <Form.Select
@@ -144,13 +144,13 @@ export default function ProductPage() {
                 className="w-100"
                 onClick={addToCartHandler}
               >
-                {existingCartItem ? 'Update Cart' : 'Add To Cart'}
+                {existingCartItem ? 'به‌روزرسانی سبد' : 'افزودن به سبد'}
               </Button>
 
               {existingCartItem && (
                 <div className="text-center mt-2">
                   <small className="text-muted">
-                    Currently in cart: {existingCartItem.qty}
+                    تعداد فعلی در سبد: {existingCartItem.qty}
                   </small>
                 </div>
               )}
@@ -164,12 +164,12 @@ export default function ProductPage() {
         <Col lg={8} className="mx-auto">
           <Card className="shadow-sm">
             <Card.Header>
-              <h2 className="fw-bold mb-0">Customer Reviews</h2>
+              <h2 className="fw-bold mb-0">نظرات کاربران</h2>
             </Card.Header>
             <Card.Body>
               {product.reviews?.length === 0 ? (
                 <div className="text-center text-muted py-4">
-                  <p>No reviews yet. Be the first to review this product!</p>
+                  <p>هنوز نظری ثبت نشده است. شما اولین نفر باشید!</p>
                 </div>
               ) : (
                 <div className="mb-4">
@@ -199,26 +199,26 @@ export default function ProductPage() {
               {/* Review Form */}
               <Card>
                 <Card.Body>
-                  <h4 className="fw-bold mb-4">Write a Review</h4>
+                  <h4 className="fw-bold mb-4">نوشتن نظر</h4>
                   <Form onSubmit={handleSubmit(submitHandler)}>
                     <Row>
                       <Col md={6}>
                         <Form.Group className="mb-3">
                           <Form.Label className="fw-semibold">
-                            Rating
+                            امتیاز
                           </Form.Label>
                           <Form.Select
                             {...register('rating', {
                               valueAsNumber: true,
-                              required: 'Rating is required',
+                              required: 'امتیاز لازم است',
                             })}
                           >
-                            <option value="">Select a rating</option>
-                            <option value="1">★ 1 - Poor</option>
-                            <option value="2">★★ 2 - Fair</option>
-                            <option value="3">★★★ 3 - Good</option>
-                            <option value="4">★★★★ 4 - Very Good</option>
-                            <option value="5">★★★★★ 5 - Excellent</option>
+                            <option value="">انتخاب امتیاز</option>
+                            <option value="1">★ 1 - ضعیف</option>
+                            <option value="2">★★ 2 - قابل قبول</option>
+                            <option value="3">★★★ 3 - خوب</option>
+                            <option value="4">★★★★ 4 - بسیار خوب</option>
+                            <option value="5">★★★★★ 5 - عالی</option>
                           </Form.Select>
                         </Form.Group>
                       </Col>
@@ -226,20 +226,20 @@ export default function ProductPage() {
 
                     <Form.Group className="mb-3">
                       <Form.Label className="fw-semibold">
-                        Your Review
+                        نظر شما
                       </Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={4}
-                        placeholder="Share your thoughts about this product..."
+                        placeholder="دیدگاه خود را درباره این محصول بنویسید..."
                         {...register('comment', {
-                          required: 'Comment is required',
+                          required: 'ثبت نظر الزامی است',
                         })}
                       />
                     </Form.Group>
 
                     <Button type="submit" size="lg">
-                      Submit Review
+                      ثبت نظر
                     </Button>
                   </Form>
                 </Card.Body>

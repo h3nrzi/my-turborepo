@@ -29,11 +29,11 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAdmin)
-      toast.warn('Unauthorized to perform this action', {
+      toast.warn('شما مجاز به انجام این عملیات نیستید', {
         position: 'top-center',
       });
     if (!userInfo && isprivate)
-      toast.warn('Please login first!', { position: 'top-center' });
+      toast.warn('ابتدا وارد حساب شوید!', { position: 'top-center' });
     if (userInfo) navigate(redirect);
   }, [userInfo, redirect, navigate, isprivate, isAdmin]);
 
@@ -52,22 +52,22 @@ const LoginPage = () => {
 
   return (
     <FormContainer>
-      <h1>Sign In</h1>
+      <h1>ورود</h1>
       <Form onSubmit={handleSubmit(submitHandler)}>
         <Stack gap={3}>
           <Form.Group controlId="email">
-            <Form.Label>Email Address</Form.Label>
+            <Form.Label>ایمیل</Form.Label>
             <Form.Control
               type="email"
-              placeholder="Enter Your Email..."
+              placeholder="ایمیل خود را وارد کنید..."
               {...register('email')}
             />
           </Form.Group>
           <Form.Group controlId="password">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>رمز عبور</Form.Label>
             <Form.Control
               type="password"
-              placeholder="Enter Your Password..."
+              placeholder="رمز عبور خود را وارد کنید..."
               {...register('password')}
             />
           </Form.Group>
@@ -77,26 +77,26 @@ const LoginPage = () => {
             className="w-25"
             disabled={LoginLoading}
           >
-            Sign In
+            ورود
             {LoginLoading && <Spinner size="sm" className="ms-2" />}
           </Button>
         </Stack>
       </Form>
       <Row className="py-3">
         <Col>
-          New Customer?
+          کاربر جدید هستید؟
           <Link
             to={redirect ? `/register?redirect=${redirect}` : '/register'}
             className="ms-1"
           >
-            Register
+            ثبت نام
           </Link>
         </Col>
       </Row>
       <Row>
         <Col>
           <Alert variant="info" className="text-red">
-            Discover as Admin: admin@gmail.com | password: 123456
+            ورود آزمایشی مدیر: admin@gmail.com | رمز: 123456
           </Alert>
         </Col>
       </Row>

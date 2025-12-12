@@ -23,7 +23,7 @@ const SearchBox = () => {
     <Form onSubmit={handleSubmit(submitHandler)} className="d-flex">
       <Form.Control
         type="text"
-        placeholder="Search products..."
+        placeholder="جستجوی محصولات..."
         className="py-2"
         {...register('keyword')}
       />
@@ -32,7 +32,7 @@ const SearchBox = () => {
         variant="outline-light"
         className="px-3 py-2 mx-2 text-nowrap"
       >
-        <FaSearch /> Search
+        <FaSearch /> جستجو
       </Button>
     </Form>
   );

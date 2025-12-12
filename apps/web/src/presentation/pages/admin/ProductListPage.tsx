@@ -28,7 +28,7 @@ export default function ProductListPage() {
     useDeleteProductMutation();
 
   const deleteProductHandler = async (id: string) => {
-    if (window.confirm('Are you sure you want to delete')) {
+    if (window.confirm('از حذف این محصول مطمئن هستید؟')) {
       try {
         const res = await deleteProductMutation({ productId: id }).unwrap();
         productsRefetch();
@@ -46,7 +46,7 @@ export default function ProductListPage() {
     <Fragment>
       <Row className="align-items-center mb-5">
         <Col>
-          <h1 className="fw-bold">Products</h1>
+          <h1 className="fw-bold">محصولات</h1>
         </Col>
         <Col className="text-end">
           <CreateNewProductButton />
@@ -74,7 +74,7 @@ const CreateNewProductButton = () => {
         className="m-3 px-2 py-1 text-center text-white"
         variant="warning"
       >
-        Create New Product
+        ایجاد محصول جدید
       </Button>
     </Link>
   );
@@ -90,12 +90,12 @@ const ProductsTable = ({ products, onDeleteProduct }: ProductsTableProps) => {
     <Table responsive="lg" bordered className="text-nowrap">
       <thead>
         <tr className="text-secondary font-monospace">
-          <th className="px-5 px-lg-0">Id</th>
-          <th className="px-5 px-lg-0">Name</th>
-          <th className="px-5 px-lg-0">Price</th>
-          <th className="px-5 px-lg-0">Category</th>
-          <th className="px-5 px-lg-0">Brand</th>
-          <th className="px-5 px-lg-0">Count</th>
+          <th className="px-5 px-lg-0">شناسه</th>
+          <th className="px-5 px-lg-0">نام</th>
+          <th className="px-5 px-lg-0">قیمت</th>
+          <th className="px-5 px-lg-0">دسته‌بندی</th>
+          <th className="px-5 px-lg-0">برند</th>
+          <th className="px-5 px-lg-0">موجودی</th>
           <th className="px-5 px-lg-0"></th>
         </tr>
       </thead>
@@ -110,7 +110,7 @@ const ProductsTable = ({ products, onDeleteProduct }: ProductsTableProps) => {
               }
             </td>
             <td>{product.name}</td>
-            <td>{`$${product.price}`}</td>
+            <td>{`${product.price} $`}</td>
             <td>{product.category}</td>
             <td>{product.brand}</td>
             <td>{product.countInStock}</td>
