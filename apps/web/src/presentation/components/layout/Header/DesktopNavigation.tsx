@@ -1,14 +1,14 @@
-import { Badge, Nav } from 'react-bootstrap';
-import { FaShoppingCart, FaUser } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from 'presentation/contexts/store';
-import { UserInfo } from 'presentation/contexts/auth';
-import ThemeSwitch from 'presentation/components/common/ThemeSwitch';
 import SearchBox from 'presentation/components/common/SearchBox';
-import ProfileDropdown from './ProfileDropdown';
+import ThemeSwitch from 'presentation/components/common/ThemeSwitch';
+import { UserInfo } from 'presentation/contexts/auth';
+import { RootState } from 'presentation/contexts/store';
+import { Badge, Nav } from 'react-bootstrap';
+
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import AdminDropdown from './AdminDropdown';
 import styles from './Header.module.css';
+import ProfileDropdown from './ProfileDropdown';
 
 interface DesktopNavigationProps {
   userInfo: UserInfo | undefined;
@@ -23,45 +23,35 @@ export default function DesktopNavigation({
 
   return (
     <>
-      <div className={`d-none d-lg-block flex-grow-1 mx-4 ${styles.searchWrap}`}>
+      <div
+        className={`d-none d-lg-block flex-grow-1 mx-4 ${styles.searchWrap}`}
+      >
         <SearchBox />
       </div>
 
-      <Nav className={`d-none d-lg-flex align-items-center gap-3 ${styles.desktopNav}`}>
+      <Nav
+        className={`d-none d-lg-flex align-items-center gap-3 ${styles.desktopNav}`}
+      >
+        <Link to="/cart" className="text-decoration-none">
+          <Nav.Link as="span" className="text-white">
+            سبد خرید
+            {orderItems.length > 0 && (
+              <Badge bg="danger" className="ms-2">
+                {orderItems.reduce((acc, item) => acc + item.qty, 0)}
+              </Badge>
+            )}
+          </Nav.Link>
+        </Link>
         {userInfo && userInfo.isAdmin && <AdminDropdown />}
         {userInfo ? (
           <ProfileDropdown onLogout={onLogout} userInfo={userInfo} />
         ) : (
           <Link to="/login" className="text-decoration-none">
-            <Nav.Link
-              as="span"
-              className={`${styles.navPill} ${styles.navPillPrimary}`}
-            >
-              <FaUser size={16} />
-              <span>ورود</span>
+            <Nav.Link as="span" className="text-white">
+              ورود
             </Nav.Link>
           </Link>
         )}
-        <Link to="/cart" className="text-decoration-none position-relative">
-          <Nav.Link
-            as="span"
-            className={`${styles.navPill} ${styles.navPillSuccess}`}
-          >
-            <div className="position-relative">
-              <FaShoppingCart size={18} />
-              {orderItems.length > 0 && (
-                <Badge
-                  bg="danger"
-                  className={`position-absolute top-0 start-100 translate-middle rounded-pill ${styles.cartBadge}`}
-                  style={{ fontSize: '0.7rem' }}
-                >
-                  {orderItems.reduce((acc, item) => acc + item.qty, 0)}
-                </Badge>
-              )}
-            </div>
-            <span>سبد خرید</span>
-          </Nav.Link>
-        </Link>
         <div>
           <ThemeSwitch />
         </div>

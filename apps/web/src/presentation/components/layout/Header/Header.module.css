@@ -112,6 +112,18 @@
   justify-content: flex-start;
 }
 
+.navPillAdmin {
+  background: linear-gradient(120deg, rgba(251, 191, 36, 0.2), rgba(248, 113, 113, 0.14)) !important;
+  border-color: rgba(251, 191, 36, 0.55) !important;
+  color: #fff7ed !important;
+  box-shadow: 0 10px 24px rgba(251, 191, 36, 0.2);
+}
+
+.navPillAdmin:hover {
+  background: linear-gradient(120deg, rgba(251, 191, 36, 0.26), rgba(248, 113, 113, 0.18)) !important;
+  border-color: rgba(251, 191, 36, 0.65) !important;
+}
+
 .avatarCircle {
   width: 32px;
   height: 32px;
@@ -252,6 +264,30 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
+}
+
+.adminMenu {
+  min-width: 250px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, #0b152a 0%, #0b1020 100%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 0.35rem 0.5rem 0.5rem;
+}
+
+.adminMenuItem {
+  border-radius: 10px;
+  color: #e2e8f0 !important;
+  padding: 0.65rem 0.75rem !important;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.adminMenuItem:hover {
+  background: rgba(251, 191, 36, 0.12);
+  color: #fff7ed !important;
+  transform: translateX(-2px);
 }
 
 .backdrop {
