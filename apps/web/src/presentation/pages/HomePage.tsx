@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import { Fragment } from 'react/jsx-runtime';
@@ -9,6 +10,7 @@ import ProductCardSkeleton from '../components/ProductCardSkeleton';
 import getErrorMessage from 'shared/utils/getErrorMessage';
 import ProductCarousel from '../components/ProductCarousel';
 import Meta from '../components/common/Meta';
+import StartupLoader from '../components/common/StartupLoader';
 
 const HomePage = () => {
   const [searchParams] = useSearchParams();
@@ -18,6 +20,18 @@ const HomePage = () => {
     pageNumber,
     keyword,
   });
+
+  const hasCompletedWarmupRef = useRef(false);
+
+  useEffect(() => {
+    if (!isLoading && !isFetching) {
+      hasCompletedWarmupRef.current = true;
+    }
+  }, [isLoading, isFetching]);
+
+  const isStartupLoading = (isLoading || isFetching) && !hasCompletedWarmupRef.current;
+
+  if (isStartupLoading) return <StartupLoader />;
 
   if (data?.products.length === 0)
     return <Message variant="info">محصولی یافت نشد</Message>;
