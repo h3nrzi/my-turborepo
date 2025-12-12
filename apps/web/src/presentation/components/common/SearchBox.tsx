@@ -20,20 +20,20 @@ const SearchBox = () => {
   }
 
   return (
-    <Form onSubmit={handleSubmit(submitHandler)} className="d-flex">
+    <Form
+      onSubmit={handleSubmit(submitHandler)}
+      className="d-flex flex-row-reverse align-items-stretch gap-2 w-100"
+      dir="rtl"
+    >
+      <Button type="submit" variant="outline-light" className="px-3 py-2 text-nowrap">
+        <FaSearch /> جستجو
+      </Button>
       <Form.Control
         type="text"
         placeholder="جستجوی محصولات..."
-        className="py-2"
+        className="py-2 text-end"
         {...register('keyword')}
       />
-      <Button
-        type="submit"
-        variant="outline-light"
-        className="px-3 py-2 mx-2 text-nowrap"
-      >
-        <FaSearch /> جستجو
-      </Button>
     </Form>
   );
 };
