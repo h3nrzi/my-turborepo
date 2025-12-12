@@ -8,6 +8,7 @@
   --header-muted: #475569;
   --header-surface: rgba(15, 23, 42, 0.03);
   --header-surface-strong: rgba(15, 23, 42, 0.06);
+  --header-logo-bg: #ffffff;
   --header-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
   --header-card-shadow: 0 6px 16px rgba(15, 23, 42, 0.12);
   --header-icon-bg: rgba(15, 23, 42, 0.04);
@@ -23,6 +24,7 @@
   --header-muted: #cbd5e1;
   --header-surface: rgba(255, 255, 255, 0.02);
   --header-surface-strong: rgba(255, 255, 255, 0.06);
+  --header-logo-bg: rgba(255, 255, 255, 0.08);
   --header-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   --header-card-shadow: 0 6px 16px rgba(0, 0, 0, 0.18);
   --header-icon-bg: rgba(255, 255, 255, 0.06);
@@ -52,7 +54,7 @@
 .logo {
   border-radius: 12px;
   box-shadow: 0 0 0 3px var(--header-border-color);
-  background: var(--header-surface-strong);
+  background: var(--header-logo-bg);
   padding: 4px;
 }
 
