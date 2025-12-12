@@ -9,6 +9,7 @@ import { resetCart } from 'presentation/contexts/cart';
 import { RootState } from 'presentation/contexts/store';
 import logo from 'shared/assets/logo.png';
 import ThemeSwitch from 'presentation/components/common/ThemeSwitch';
+import useTheme from 'shared/styles/theme/useTheme';
 import MobileSidebar from './MobileSidebar';
 import DesktopNavigation from './DesktopNavigation';
 import styles from './Header.module.css';
@@ -20,6 +21,7 @@ export default function Header() {
   const userInfo = useSelector((s: RootState) => s.auth.userInfo);
   const [logoutMutation] = useLogoutMutation();
   const [isNavOpen, setIsNavOpen] = useState(false);
+  const { theme } = useTheme();
 
   const logoutHandler = async () => {
     try {
@@ -56,8 +58,8 @@ export default function Header() {
   return (
     <header className={`sticky-top ${styles.headerShell}`}>
       <Navbar
-        bg="dark"
-        variant="dark"
+        bg={theme === 'dark' ? 'dark' : 'light'}
+        variant={theme === 'dark' ? 'dark' : 'light'}
         expand="lg"
         collapseOnSelect
         className={`${styles.navbar} py-3`}
@@ -79,7 +81,7 @@ export default function Header() {
               />
               <div className="d-flex flex-column">
                 <span className={styles.textGradient}>پروشاپ</span>
-                <small className="text-white-50 fw-normal">
+                <small className={`${styles.tagline} fw-normal`}>
                   بازارچه دیجیتال شما
                 </small>
               </div>

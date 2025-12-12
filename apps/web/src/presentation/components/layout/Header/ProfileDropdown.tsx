@@ -1,6 +1,7 @@
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { UserInfo } from 'presentation/contexts/auth';
+import styles from './Header.module.css';
 
 interface ProfileDropdownProps {
   userInfo: UserInfo;
@@ -26,7 +27,7 @@ export default function ProfileDropdown({
       <Dropdown.Toggle
         id="profile-dropdown"
         variant="link"
-        className="text-white text-decoration-none border-0 p-0 dropdown-toggle"
+        className={`${styles.dropdownToggle} text-decoration-none border-0 p-0 dropdown-toggle`}
       >
         {userInfo.avatar ? (
           <img
@@ -39,7 +40,7 @@ export default function ProfileDropdown({
           />
         ) : (
           <div
-            className="rounded-circle bg-secondary text-white d-flex align-items-center justify-content-center"
+            className={`${styles.avatarCircle} d-flex align-items-center justify-content-center`}
             style={{ width: '32px', height: '32px', fontSize: '14px' }}
           >
             {avatarInitial}

@@ -35,7 +35,7 @@ export default function MobileSidebar({
       <div className="d-flex justify-content-between align-items-center mb-3">
         <div>
           <p className={`mb-1 ${styles.eyebrow}`}>ناوبری سریع</p>
-          <h5 className="mb-0 text-white">منوی موبایل</h5>
+          <h5 className={`mb-0 ${styles.heading}`}>منوی موبایل</h5>
         </div>
         <button
           className={styles.iconButton}
@@ -57,10 +57,10 @@ export default function MobileSidebar({
               <div className="d-flex align-items-center gap-2 mb-2">
                 <FaRegUserCircle size={26} />
                 <div className="overflow-hidden">
-                  <div className="fw-semibold text-white text-truncate">
+                  <div className={`fw-semibold ${styles.heading} text-truncate`}>
                     {userInfo.name || 'کاربر'}
                   </div>
-                  <small className="text-white-50 text-truncate d-block">
+                  <small className={`${styles.mutedText} text-truncate d-block`}>
                     {userInfo.email}
                   </small>
                 </div>
@@ -152,7 +152,7 @@ export default function MobileSidebar({
         </Link>
 
         <div className={styles.inlineControl}>
-          <span className="text-white-50 small">حالت نمایش</span>
+          <span className={`${styles.mutedText} small`}>حالت نمایش</span>
           <ThemeSwitch />
         </div>
       </Nav>
