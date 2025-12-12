@@ -94,6 +94,7 @@ export default function Header() {
               aria-controls="basic-navbar-nav"
               aria-label={isNavOpen ? 'بستن منو' : 'باز کردن منو'}
               className={styles.toggle}
+              onClick={() => setIsNavOpen((prev) => !prev)}
             />
           </div>
 
