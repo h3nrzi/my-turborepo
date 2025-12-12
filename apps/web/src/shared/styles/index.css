@@ -1,66 +1,108 @@
 @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700&display=swap');
 
-body {
-  font-family: 'Vazirmatn', sans-serif;
-  font-weight: 500;
-  direction: rtl;
-  text-align: right;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 20% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 20% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221.2 83.2% 53.3%;
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased font-vazirmatn;
+    direction: rtl;
+    text-align: right;
+    min-height: 100vh;
+  }
+
+  input,
+  textarea,
+  select,
+  .form-control,
+  .form-select {
+    text-align: right;
+    direction: rtl;
+  }
+
+  main {
+    min-height: 80vh;
+  }
 }
 
-input,
-textarea,
-select,
-.form-control,
-.form-select {
-  text-align: right;
-  direction: rtl;
-}
+@layer components {
+  .product-title {
+    @apply h-10 overflow-hidden text-ellipsis whitespace-nowrap;
+  }
 
-.navbar .dropdown-menu {
-  text-align: right;
-}
+  table td,
+  table th {
+    @apply text-center;
+  }
 
-main {
-  min-height: 80vh;
-}
+  .review {
+    @apply mt-8;
+  }
 
-.product-title {
-  height: 2.5em;
-  /* Set a fixed height */
-  overflow: hidden;
-  /* Hide overflow content */
-  text-overflow: ellipsis;
-  /* Add ellipsis for long text */
-  white-space: nowrap;
-  /* Prevent wrapping */
-}
+  .review h2 {
+    @apply text-xl bg-slate-100 p-3.5 border border-slate-200 rounded-lg;
+  }
 
-table td,
-table th {
-  text-align: center;
-}
+  .review button {
+    @apply mt-2.5;
+  }
 
-.review {
-  margin-top: 30px;
-}
-
-.review h2 {
-  font-size: 24px;
-  background: #f4f4f4;
-  padding: 14px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-
-.review button {
-  margin-top: 10px;
-}
-
-.carousel-caption {
-  position: absolute;
-  width: 100%;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  .carousel-caption {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
 }

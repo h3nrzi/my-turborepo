@@ -3,7 +3,7 @@ import { Button, Form, Stack } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import { saveShippingAddress } from 'presentation/contexts/cart';
 import FormContainer from '../components/common/FormContainer';
 import { RootState } from 'presentation/contexts/store';

@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useRef } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import { savePaymentMethod } from 'presentation/contexts/cart';
 import CheckoutSteps from '../components/common/CheckoutSteps';
 import FormContainer from '../components/common/FormContainer';

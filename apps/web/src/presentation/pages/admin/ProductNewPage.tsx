@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Form, Stack } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import {
   useCreateProductMutation,
   useUploadProductImageMutation,

@@ -3,7 +3,7 @@ import { Button, Form, Stack } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import {
   useGetUserQuery,
   useUpdateUserMutation,

@@ -3,7 +3,7 @@ import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import { useRegisterMutation } from 'infrastructure/services/api/users-api';
 import { setCredentials } from 'presentation/contexts/auth';
 import FormContainer from '../components/common/FormContainer';

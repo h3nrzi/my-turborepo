@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import { useGetMyOrdersQuery } from 'infrastructure/services/api/orders-api';
 import { useUpdateProfileMutation } from 'infrastructure/services/api/users-api';
 import { setCredentials } from 'presentation/contexts/auth';

@@ -8,7 +8,7 @@ import {
 import moment from 'moment';
 import { FC, Fragment, useEffect } from 'react';
 import { Button, Card, Col, Image, ListGroup, Row } from 'react-bootstrap';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import {

@@ -2,7 +2,7 @@ import { Container, Image, Navbar } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import { useLogoutMutation } from 'infrastructure/services/api/users-api';
 import { clearCredentials } from 'presentation/contexts/auth';
 import { resetCart } from 'presentation/contexts/cart';

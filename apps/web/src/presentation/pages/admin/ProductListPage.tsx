@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { Button, Col, Row, Table } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { Link, useSearchParams } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,

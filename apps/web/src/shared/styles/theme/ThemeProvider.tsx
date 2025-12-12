@@ -14,6 +14,7 @@ const ThemeProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-bs-theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
   }, [theme]);
 
   return (

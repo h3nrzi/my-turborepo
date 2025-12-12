@@ -4,7 +4,7 @@ import { Badge, Button, Table } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import { Fragment } from 'react/jsx-runtime';
 import {
   useDeleteUserMutation,

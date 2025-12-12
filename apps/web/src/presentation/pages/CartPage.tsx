@@ -1,7 +1,7 @@
 import { Card, Col, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import { addToCart, removeFromCart } from 'presentation/contexts/cart';
 import CartItem from '../components/CartItem';
 import CartSummary from '../components/CartSummary';

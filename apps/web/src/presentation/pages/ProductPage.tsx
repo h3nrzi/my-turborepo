@@ -10,7 +10,7 @@ import {
   Row,
 } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import toast from 'react-hot-toast';
+import { toast } from '@/components/ui/sonner';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {
