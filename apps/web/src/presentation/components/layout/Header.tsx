@@ -34,7 +34,7 @@ export default function Header() {
       navigate('/');
       location.reload();
     } catch {
-      toast.error('some error occurred!', { position: 'top-center' });
+      toast.error('خطایی رخ داد!', { position: 'top-center' });
     }
   };
 
@@ -45,7 +45,7 @@ export default function Header() {
           <Link to="/" className="text-decoration-none me-auto">
             <Navbar.Brand as="span">
               <Image src={logo} fluid />
-              ProShop
+              پروشاپ
             </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -64,7 +64,7 @@ export default function Header() {
               ) : (
                 <Link to="/login" className="text-decoration-none">
                   <Nav.Link as="span">
-                    <FaUser /> Sign In
+                    <FaUser /> ورود
                   </Nav.Link>
                 </Link>
               )}
@@ -75,7 +75,7 @@ export default function Header() {
                       {orderItems.reduce((acc, item) => acc + item.qty, 0)}
                     </Badge>
                   )}
-                  <FaShoppingCart /> Cart
+                  <FaShoppingCart /> سبد خرید
                 </Nav.Link>
               </Link>
               <div className="d-none d-lg-block ms-3">
@@ -109,9 +109,9 @@ const ProfileDropdown = ({
       <Dropdown.Menu>
         <Dropdown.Header>{userInfo.email}</Dropdown.Header>
         <Link to="/profile" className="dropdown-item">
-          Profile
+          پروفایل
         </Link>
-        <Dropdown.Item onClick={onLogout}>Logout</Dropdown.Item>
+        <Dropdown.Item onClick={onLogout}>خروج</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   );
@@ -130,13 +130,13 @@ const AdminDropdown = () => {
       </Dropdown.Toggle>
       <Dropdown.Menu>
         <Link to="/admin/product-list" className="dropdown-item">
-          Products
+          محصولات
         </Link>
         <Link to="/admin/user-list" className="dropdown-item">
-          Users
+          کاربران
         </Link>
         <Link to="/admin/order-list" className="dropdown-item">
-          Orders
+          سفارش‌ها
         </Link>
       </Dropdown.Menu>
     </Dropdown>

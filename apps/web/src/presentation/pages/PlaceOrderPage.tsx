@@ -28,7 +28,7 @@ export default function PlaceOrderPage() {
 
   useEffect(() => {
     if (!paymentMethod) {
-      toast.warn('Please enter a payment method!', { position: 'top-center' });
+      toast.warn('لطفاً روش پرداخت را وارد کنید!', { position: 'top-center' });
       navigate('/payment');
     }
   }, [navigate, paymentMethod]);
@@ -76,9 +76,9 @@ interface ShippingInfoProps {
 
 const ShippingInfo = ({ shippingAddress }: ShippingInfoProps) => (
   <ListGroup.Item>
-    <h2 className="fw-bold">Shipping</h2>
+    <h2 className="fw-bold">آدرس ارسال</h2>
     <p>
-      <strong className="me-1">Address:</strong>
+      <strong className="me-1">آدرس:</strong>
       {shippingAddress?.address}, {shippingAddress?.city},{' '}
       {shippingAddress?.postalCode}, {shippingAddress?.country}
     </p>
@@ -91,9 +91,9 @@ interface PaymentInfoProps {
 
 const PaymentInfo = ({ paymentMethod }: PaymentInfoProps) => (
   <ListGroup.Item>
-    <h2 className="fw-bold">Payment Method</h2>
+    <h2 className="fw-bold">روش پرداخت</h2>
     <p>
-      <strong className="me-1">Method:</strong>
+      <strong className="me-1">روش:</strong>
       {paymentMethod}
     </p>
   </ListGroup.Item>
@@ -105,9 +105,9 @@ interface OrderItemsProps {
 
 const OrderItems = ({ orderItems }: OrderItemsProps) => (
   <ListGroup.Item>
-    <h2 className="fw-bold">Order Items</h2>
+    <h2 className="fw-bold">اقلام سفارش</h2>
     {orderItems.length === 0 ? (
-      <Message variant="info">Your Cart is empty</Message>
+      <Message variant="info">سبد خرید شما خالی است</Message>
     ) : (
       orderItems.map((item) => (
         <ListGroup key={item._id} className="my-5 my-md-2">
@@ -144,30 +144,30 @@ const OrderSummary = ({
   <Card>
     <ListGroup variant="flush">
       <ListGroup.Item>
-        <h2 className="fw-bold">Order Summary</h2>
+        <h2 className="fw-bold">خلاصه سفارش</h2>
       </ListGroup.Item>
       <ListGroup.Item>
         <Row>
-          <Col>Items Price:</Col>
-          <Col>${cart.itemsPrice}</Col>
+          <Col>مبلغ کالاها:</Col>
+          <Col>{cart.itemsPrice} $</Col>
         </Row>
       </ListGroup.Item>
       <ListGroup.Item>
         <Row>
-          <Col>Shipping Price:</Col>
-          <Col>${cart.itemsPrice}</Col>
+          <Col>هزینه ارسال:</Col>
+          <Col>{cart.itemsPrice} $</Col>
         </Row>
       </ListGroup.Item>
       <ListGroup.Item>
         <Row>
-          <Col>Tax Price:</Col>
-          <Col>${cart.taxPrice}</Col>
+          <Col>مالیات:</Col>
+          <Col>{cart.taxPrice} $</Col>
         </Row>
       </ListGroup.Item>
       <ListGroup.Item>
         <Row>
-          <Col>Total Price:</Col>
-          <Col>${cart.totalPrice}</Col>
+          <Col>مبلغ کل:</Col>
+          <Col>{cart.totalPrice} $</Col>
         </Row>
       </ListGroup.Item>
       <ListGroup.Item className="text-center">
@@ -176,7 +176,7 @@ const OrderSummary = ({
           disabled={cart.orderItems.length === 0}
           onClick={onPlaceOrder}
         >
-          Place Order
+          ثبت سفارش
           {createOrderLoading && <Spinner size="sm" className="ms-2" />}
         </Button>
       </ListGroup.Item>

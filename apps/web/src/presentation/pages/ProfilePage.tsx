@@ -32,7 +32,9 @@ export default function ProfilePage() {
     confirmPassword,
   }: FormData) => {
     if (password !== confirmPassword)
-      return toast.error('Passwords do not match!', { position: 'top-center' });
+      return toast.error('رمز عبور و تکرار آن یکسان نیست', {
+        position: 'top-center',
+      });
 
     try {
       const res = await updateProfileMutation({
@@ -41,7 +43,7 @@ export default function ProfilePage() {
         password,
       }).unwrap();
       dispatch(setCredentials(res));
-      toast.success('Profile updated successfully!', {
+      toast.success('پروفایل با موفقیت به‌روزرسانی شد', {
         position: 'top-center',
       });
     } catch (err: unknown) {
@@ -55,14 +57,14 @@ export default function ProfilePage() {
   return (
     <Row>
       <Col md={3}>
-        <h2 className="mb-3">User Info</h2>
+        <h2 className="mb-3">اطلاعات کاربر</h2>
         <ProfileForm
           onSubmit={submitHandler}
           updateProfileLoading={updateProfileLoading}
         />
       </Col>
       <Col md={9}>
-        <h2 className="mb-3">Orders</h2>
+        <h2 className="mb-3">سفارش‌ها</h2>
         {ordersLoading ? (
           <Loader />
         ) : ordersError ? (
@@ -110,43 +112,43 @@ const ProfileForm: FC<ProfileFormProps> = ({
     <Form onSubmit={handleSubmit(onSubmit)} className="mb-5 mb-md-0">
       <Stack gap={4}>
         <Form.Group controlId="name">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>نام</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter your name"
+            placeholder="نام خود را وارد کنید"
             {...register('name', { required: true })}
           />
-          {errors.name && <span className="text-danger">Name is required</span>}
+          {errors.name && <span className="text-danger">نام الزامی است</span>}
         </Form.Group>
         <Form.Group controlId="email">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>ایمیل</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Enter your email"
+            placeholder="ایمیل خود را وارد کنید"
             {...register('email', { required: true })}
           />
           {errors.email && (
-            <span className="text-danger">Email is required</span>
+            <span className="text-danger">ایمیل الزامی است</span>
           )}
         </Form.Group>
         <Form.Group controlId="password">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>رمز عبور</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Enter your password"
+            placeholder="رمز عبور خود را وارد کنید"
             {...register('password')}
           />
         </Form.Group>
         <Form.Group controlId="confirmPassword">
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label>تکرار رمز عبور</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Enter your confirm password"
+            placeholder="رمز عبور را دوباره وارد کنید"
             {...register('confirmPassword')}
           />
         </Form.Group>
         <Button type="submit" variant="primary" className="w-50">
-          Update
+          به‌روزرسانی
           {updateProfileLoading && <Loader size="sm" />}
         </Button>
       </Stack>
@@ -163,11 +165,11 @@ const OrdersTable: FC<OrdersTableProps> = ({ orders }) => {
     <Table responsive="lg" className="text-nowrap">
       <thead>
         <tr>
-          <th className="px-5 px-lg-0">ID</th>
-          <th className="px-5 px-lg-0">DATE</th>
-          <th className="px-5 px-lg-0">TOTAL PRICE</th>
-          <th className="px-5 px-lg-0">PAID</th>
-          <th className="px-5 px-lg-0">DELIVERED</th>
+          <th className="px-5 px-lg-0">شناسه</th>
+          <th className="px-5 px-lg-0">تاریخ</th>
+          <th className="px-5 px-lg-0">مبلغ کل</th>
+          <th className="px-5 px-lg-0">پرداخت</th>
+          <th className="px-5 px-lg-0">تحویل</th>
           <th className="px-5 px-lg-0"></th>
         </tr>
       </thead>
@@ -180,7 +182,7 @@ const OrdersTable: FC<OrdersTableProps> = ({ orders }) => {
               </Link>
             </td>
             <td>{order.createdAt.substring(0, 10)}</td>
-            <td>${order.totalPrice}</td>
+            <td>{order.totalPrice} $</td>
             <td>
               {order.isPaid ? (
                 <span className=" text-success">
@@ -210,7 +212,7 @@ const OrdersTable: FC<OrdersTableProps> = ({ orders }) => {
                     variant="secondary"
                     className="text-white"
                   >
-                    Details
+                    جزئیات
                   </Button>
                 </Link>
               )}

@@ -17,9 +17,9 @@ const CartSummary = ({ orderItems, onCheckout }: CartSummaryProps) => {
       <ListGroup variant="flush">
         <ListGroup.Item>
           <h3 className="fw-bolder">
-            Subtotal
+            جمع جزئی
             <span className="mx-1 text-decoration-underline">{itemCount}</span>
-            Items
+            کالا
           </h3>
           <h6>${totalPrice}</h6>
         </ListGroup.Item>
@@ -31,7 +31,7 @@ const CartSummary = ({ orderItems, onCheckout }: CartSummaryProps) => {
             disabled={orderItems.length === 0}
             onClick={onCheckout}
           >
-            Proceed To Checkout
+            ادامه فرایند خرید
           </Button>
         </ListGroup.Item>
       </ListGroup>

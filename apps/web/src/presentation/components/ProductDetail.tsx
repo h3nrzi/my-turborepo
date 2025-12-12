@@ -31,10 +31,10 @@ const ProductDetail: FC<Props> = ({ product, onAddToCart }) => {
           </ListGroup.Item>
           <ListGroup.Item>
             <div>
-              Rating: {product.rating}/5 ({product.numReviews} reviews)
+              امتیاز: {product.rating}/5 ({product.numReviews} نظر)
             </div>
           </ListGroup.Item>
-          <ListGroup.Item>Description: {product.description}</ListGroup.Item>
+          <ListGroup.Item>توضیحات: {product.description}</ListGroup.Item>
         </ListGroup>
       </Col>
 
@@ -43,18 +43,18 @@ const ProductDetail: FC<Props> = ({ product, onAddToCart }) => {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <Row>
-                <Col>Price:</Col>
+                <Col>قیمت:</Col>
                 <Col>
-                  <strong>${product.price}</strong>
+                  <strong>{product.price} $</strong>
                 </Col>
               </Row>
             </ListGroup.Item>
             <ListGroup.Item>
               <Row>
-                <Col>Status:</Col>
+                <Col>وضعیت:</Col>
                 <Col>
                   <strong>
-                    {product.countInStock > 0 ? 'In Stock' : 'Out of Stock'}
+                    {product.countInStock > 0 ? 'موجود' : 'ناموجود'}
                   </strong>
                 </Col>
               </Row>
@@ -63,7 +63,7 @@ const ProductDetail: FC<Props> = ({ product, onAddToCart }) => {
             {product.countInStock > 0 && (
               <ListGroup.Item>
                 <Row>
-                  <Col>Quantity</Col>
+                  <Col>تعداد</Col>
                   <Col>
                     <Form.Control
                       as="select"
@@ -89,7 +89,7 @@ const ProductDetail: FC<Props> = ({ product, onAddToCart }) => {
                 className="w-100"
                 onClick={() => onAddToCart(qty)}
               >
-                Add To Cart
+                افزودن به سبد خرید
               </Button>
             </ListGroup.Item>
           </ListGroup>

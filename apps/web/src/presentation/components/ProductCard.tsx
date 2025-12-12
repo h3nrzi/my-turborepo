@@ -20,10 +20,10 @@ const ProductCard: FC<Props> = ({ product }) => {
           <Card.Text as="div">
             <Rating
               value={product.rating}
-              text={`${product.numReviews} reviews`}
+              text={`${product.numReviews} نظر`}
             />
           </Card.Text>
-          <Card.Text as="h3">${product.price}</Card.Text>
+          <Card.Text as="h3">{product.price} $</Card.Text>
         </Card.Body>
       </Link>
     </Card>

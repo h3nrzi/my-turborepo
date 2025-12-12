@@ -63,7 +63,9 @@ const UserEditPage = () => {
         dispatch(setCredentials(updatedUser));
 
       userRefetch();
-      toast.success('User updated successfully', { position: 'top-center' });
+      toast.success('کاربر با موفقیت به‌روزرسانی شد', {
+        position: 'top-center',
+      });
       navigate('/admin/user-list');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
@@ -79,18 +81,18 @@ const UserEditPage = () => {
 
   return (
     <FormContainer>
-      <h1>Edit User</h1>
+      <h1>ویرایش کاربر</h1>
       <Form onSubmit={handleSubmit(submitHandler)}>
         <Stack gap={4} direction="vertical">
           <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
+            <Form.Label>نام</Form.Label>
             <Form.Control
               type="text"
               {...register('name', {
-                required: 'Name is required',
+                required: 'نام الزامی است',
                 minLength: {
                   value: 3,
-                  message: 'Name must be at least 3 characters',
+                  message: 'نام باید حداقل ۳ کاراکتر باشد',
                 },
               })}
               isInvalid={!!errors.name}
@@ -100,14 +102,14 @@ const UserEditPage = () => {
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="email">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>ایمیل</Form.Label>
             <Form.Control
               type="text"
               {...register('email', {
-                required: 'Email is required',
+                required: 'ایمیل الزامی است',
                 pattern: {
                   value: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,
-                  message: 'Enter a valid email address',
+                  message: 'یک ایمیل معتبر وارد کنید',
                 },
               })}
               isInvalid={!!errors.email}
@@ -117,23 +119,23 @@ const UserEditPage = () => {
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group controlId="isAdmin">
-            <Form.Label>Admin</Form.Label>
+            <Form.Label>وضعیت مدیریت</Form.Label>
             <Stack direction="horizontal" gap={3}>
               <Form.Check
                 type="radio"
-                label="Yes"
+                label="بله"
                 value="true"
                 {...register('isAdmin', {
-                  required: 'Admin status is required',
+                  required: 'تعیین وضعیت مدیریت الزامی است',
                 })}
                 isInvalid={!!errors.isAdmin}
               />
               <Form.Check
                 type="radio"
-                label="No"
+                label="خیر"
                 value="false"
                 {...register('isAdmin', {
-                  required: 'Admin status is required',
+                  required: 'تعیین وضعیت مدیریت الزامی است',
                 })}
                 isInvalid={!!errors.isAdmin}
               />
@@ -143,7 +145,7 @@ const UserEditPage = () => {
             </Form.Control.Feedback>
           </Form.Group>
           <Button type="submit" variant="secondary" className="text-white">
-            Update {updateUserLoading && <Loader size="sm" />}
+            به‌روزرسانی {updateUserLoading && <Loader size="sm" />}
           </Button>
         </Stack>
       </Form>

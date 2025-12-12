@@ -87,10 +87,12 @@ export default function OrderPage() {
       try {
         await updateOrderToPaidMutation({ orderId, details: payload }).unwrap();
         orderQueryRefetch();
-        toast.success('Payment successful! Click to view profile');
+        toast.success('پرداخت با موفقیت انجام شد! برای مشاهده پروفایل کلیک کنید');
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
-        toast.error(error?.data?.message || error.error || 'Payment failed');
+        toast.error(
+          error?.data?.message || error.error || 'پرداخت با مشکل مواجه شد',
+        );
       }
     });
   };
@@ -105,10 +107,12 @@ export default function OrderPage() {
     try {
       await updateOrderToPaidMutation({ orderId, details }).unwrap();
       orderQueryRefetch();
-      toast.success('Payment successful! Click to view profile');
+      toast.success('پرداخت با موفقیت انجام شد! برای مشاهده پروفایل کلیک کنید');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error || 'Payment failed');
+      toast.error(
+        error?.data?.message || error.error || 'پرداخت با مشکل مواجه شد',
+      );
     }
   };
 
@@ -140,11 +144,11 @@ export default function OrderPage() {
     try {
       await updateOrderToDeliverMutation({ orderId });
       orderQueryRefetch();
-      toast.success('Order delivered! Click to view orders');
+      toast.success('سفارش تحویل شد! برای مشاهده سفارش‌ها کلیک کنید');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
       toast.error(
-        error?.data?.message || error.error || 'Failed to deliver order',
+        error?.data?.message || error.error || 'تحویل سفارش انجام نشد',
       );
     }
   };
@@ -213,49 +217,49 @@ const OrderDetails: FC<OrderDetailsProps> = ({ order }) => {
   return (
     <ListGroup variant="flush">
       <ListGroup.Item>
-        <h2 className="fw-bold">Shipping Address</h2>
+        <h2 className="fw-bold">آدرس ارسال</h2>
         <p>
-          <strong className="me-1">Name:</strong>
+          <strong className="me-1">نام:</strong>
           {order?.user.name}
         </p>
         <p>
-          <strong className="me-1">Email:</strong>
+          <strong className="me-1">ایمیل:</strong>
           {order?.user.email}
         </p>
         <p>
-          <strong className="me-1">Address:</strong>
+          <strong className="me-1">آدرس:</strong>
           {order?.shippingAddress.address}, {order?.shippingAddress.city},
           {order?.shippingAddress.postalCode}, {order?.shippingAddress.country}
         </p>
         <p>
-          <strong className="me-1">Order at:</strong>
+          <strong className="me-1">ثبت سفارش:</strong>
           {moment(order?.createdAt).format('dddd - MMMM Do YYYY - h:mm a')}
         </p>
         {order?.isDelivered ? (
           <Message variant="success">
-            Delivered on:{' '}
+            تحویل شده در:{' '}
             {moment(order.deliveredAt!).format('dddd - MMMM Do YYYY - h:mm a')}
           </Message>
         ) : (
-          <Message variant="danger">Not Delivered!</Message>
+          <Message variant="danger">تحویل نشده!</Message>
         )}
       </ListGroup.Item>
 
       <ListGroup.Item>
-        <h2 className="fw-bold">Payment Method</h2>
+        <h2 className="fw-bold">روش پرداخت</h2>
         <p>{order?.paymentMethod}</p>
         {order?.isPaid ? (
           <Message variant="success">
-            Paid on:{' '}
+            پرداخت شده در:{' '}
             {moment(order.paidAt!).format('dddd - MMMM Do YYYY - h:mm a')}
           </Message>
         ) : (
-          <Message variant="danger">Not Paid!</Message>
+          <Message variant="danger">پرداخت نشده!</Message>
         )}
       </ListGroup.Item>
 
       <ListGroup.Item>
-        <h2 className="fw-bold">Order Items</h2>
+        <h2 className="fw-bold">اقلام سفارش</h2>
         {order?.orderItems.map((item) => (
           <ListGroup key={item._id} className="my-5 my-md-2">
             <Row className="align-items-center gap-2 gap-md-0">
@@ -286,30 +290,30 @@ const OrderSummary: FC<OrderSummaryProps> = ({ order }) => {
   return (
     <Fragment>
       <ListGroup.Item>
-        <h2 className="fw-bold">Order Summary</h2>
+        <h2 className="fw-bold">خلاصه سفارش</h2>
       </ListGroup.Item>
       <ListGroup.Item>
         <Row>
-          <Col>Items Price:</Col>
-          <Col>${order?.itemsPrice}</Col>
+          <Col>مبلغ کالاها:</Col>
+          <Col>{order?.itemsPrice} $</Col>
         </Row>
       </ListGroup.Item>
       <ListGroup.Item>
         <Row>
-          <Col>Shipping Price:</Col>
-          <Col>${order?.shippingPrice}</Col>
+          <Col>هزینه ارسال:</Col>
+          <Col>{order?.shippingPrice} $</Col>
         </Row>
       </ListGroup.Item>
       <ListGroup.Item>
         <Row>
-          <Col>Tax Price:</Col>
-          <Col>${order?.taxPrice}</Col>
+          <Col>مالیات:</Col>
+          <Col>{order?.taxPrice} $</Col>
         </Row>
       </ListGroup.Item>
       <ListGroup.Item>
         <Row>
-          <Col>Total Price:</Col>
-          <Col>${order?.totalPrice}</Col>
+          <Col>مبلغ کل:</Col>
+          <Col>{order?.totalPrice} $</Col>
         </Row>
       </ListGroup.Item>
     </Fragment>
@@ -331,7 +335,7 @@ const TestPaymentButton: FC<PaymentButtonsProps> = ({
       className="text-white mb-2 w-100"
       onClick={onApproveTest}
     >
-      PAY ORDER
+      پرداخت سفارش
       {updateOrderToPaidLoading && <Loader size="sm" />}
     </Button>
   );
@@ -352,7 +356,7 @@ const MarkAsDeliveredButton = ({
       variant="warning"
       onClick={onDeliverOrder}
     >
-      Mark as Delivered
+      تایید تحویل
       {isLoading && <Loader size="sm" />}
     </Button>
   );

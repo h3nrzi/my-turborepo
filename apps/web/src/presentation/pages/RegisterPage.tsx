@@ -34,7 +34,7 @@ const RegisterPage = () => {
 
   const submitHandler = async (data: FormData) => {
     if (data.password !== data.confirmPassword)
-      return toast.warn('Passwords do not match');
+      return toast.warn('رمز عبور و تکرار آن یکسان نیست');
 
     try {
       const res = await registerMutation(data).unwrap();
@@ -48,37 +48,37 @@ const RegisterPage = () => {
 
   return (
     <FormContainer>
-      <h1>Sign Up</h1>
+      <h1>ثبت نام</h1>
       <Form onSubmit={handleSubmit(submitHandler)}>
         <Form.Group controlId="name" className="my-3">
-          <Form.Label>Name</Form.Label>
+          <Form.Label>نام</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Enter Your Name..."
+            placeholder="نام خود را وارد کنید..."
             {...register('name')}
           />
         </Form.Group>
         <Form.Group controlId="email" className="my-3">
-          <Form.Label>Email Address</Form.Label>
+          <Form.Label>ایمیل</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Enter Your Email..."
+            placeholder="ایمیل خود را وارد کنید..."
             {...register('email')}
           />
         </Form.Group>
         <Form.Group controlId="password" className="my-3">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>رمز عبور</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Enter Your Password..."
+            placeholder="رمز عبور خود را وارد کنید..."
             {...register('password')}
           />
         </Form.Group>
         <Form.Group controlId="confirmPassword" className="my-3">
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label>تکرار رمز عبور</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Confirm Your Password..."
+            placeholder="رمز عبور را دوباره وارد کنید..."
             {...register('confirmPassword')}
           />
         </Form.Group>
@@ -88,18 +88,18 @@ const RegisterPage = () => {
           className="mt-2 w-25"
           disabled={registerLoading}
         >
-          Register
+          ثبت نام
           {registerLoading && <Spinner size="sm" className="ms-2" />}
         </Button>
       </Form>
       <Row className="py-3">
         <Col>
-          Already have an account?
+          قبلاً ثبت نام کرده‌اید؟
           <Link
             to={redirect ? `/login?redirect=${redirect}` : '/login'}
             className="ms-1"
           >
-            Login
+            ورود
           </Link>
         </Col>
       </Row>
