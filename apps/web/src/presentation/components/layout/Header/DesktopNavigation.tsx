@@ -33,7 +33,7 @@ export default function DesktopNavigation({
         className={`d-none d-lg-flex align-items-center gap-3 ${styles.desktopNav}`}
       >
         <Link to="/cart" className="text-decoration-none">
-          <Nav.Link as="span" className="text-white">
+          <Nav.Link as="span" className={styles.linkText}>
             سبد خرید
             {orderItems.length > 0 && (
               <Badge bg="danger" className="ms-2">
@@ -47,7 +47,7 @@ export default function DesktopNavigation({
           <ProfileDropdown onLogout={onLogout} userInfo={userInfo} />
         ) : (
           <Link to="/login" className="text-decoration-none">
-            <Nav.Link as="span" className="text-white">
+            <Nav.Link as="span" className={styles.linkText}>
               ورود
             </Nav.Link>
           </Link>

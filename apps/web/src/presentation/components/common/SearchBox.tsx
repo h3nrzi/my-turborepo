@@ -2,6 +2,7 @@ import { Button, Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { FaSearch } from 'react-icons/fa';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import useTheme from 'shared/styles/theme/useTheme';
 
 interface FormData {
   keyword: string;
@@ -10,6 +11,7 @@ interface FormData {
 const SearchBox = () => {
   const navigate = useNavigate();
   const { register, handleSubmit, setValue } = useForm<FormData>();
+  const { theme } = useTheme();
 
   const [searchParams] = useSearchParams();
   setValue('keyword', searchParams.get('keyword') || '');
@@ -25,7 +27,11 @@ const SearchBox = () => {
       className="d-flex flex-row-reverse align-items-stretch gap-2 w-100"
       dir="rtl"
     >
-      <Button type="submit" variant="outline-light" className="px-3 py-2 text-nowrap">
+      <Button
+        type="submit"
+        variant={theme === 'dark' ? 'outline-light' : 'primary'}
+        className="px-3 py-2 text-nowrap"
+      >
         <FaSearch /> جستجو
       </Button>
       <Form.Control

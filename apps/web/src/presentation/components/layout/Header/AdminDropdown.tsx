@@ -1,5 +1,6 @@
 import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import styles from './Header.module.css';
 
 export default function AdminDropdown() {
   return (
@@ -26,7 +27,7 @@ export default function AdminDropdown() {
       <Dropdown.Toggle
         id="admin-dropdown"
         variant="link"
-        className="text-white text-decoration-none border-0 p-0 dropdown-toggle"
+        className={`${styles.dropdownToggle} text-decoration-none border-0 p-0 dropdown-toggle`}
       >
         <span className="fw-semibold">مدیریت</span>
       </Dropdown.Toggle>
