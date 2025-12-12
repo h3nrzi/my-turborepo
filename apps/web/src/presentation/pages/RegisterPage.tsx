@@ -42,7 +42,7 @@ const RegisterPage = () => {
       navigate(redirect);
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error || 'خطایی رخ داد');
     }
   };
 

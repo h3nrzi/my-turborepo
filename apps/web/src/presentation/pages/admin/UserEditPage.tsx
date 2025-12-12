@@ -4,7 +4,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { useGetUserQuery, useUpdateUserMutation } from 'infrastructure/services/api/users-api';
+import {
+  useGetUserQuery,
+  useUpdateUserMutation,
+} from 'infrastructure/services/api/users-api';
 import { setCredentials } from 'presentation/contexts/auth';
 import FormContainer from '../../components/common/FormContainer';
 import Loader from '../../components/common/Loader';
@@ -67,7 +70,7 @@ const UserEditPage = () => {
       navigate('/admin/user-list');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error || 'خطایی رخ داد');
     }
   };
 

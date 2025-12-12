@@ -12,7 +12,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useCreateOrderMutation } from 'infrastructure/services/api/orders-api';
-import { resetCart, type CartState, type ShippingAddress } from 'presentation/contexts/cart';
+import {
+  resetCart,
+  type CartState,
+  type ShippingAddress,
+} from 'presentation/contexts/cart';
 import CheckoutSteps from '../components/common/CheckoutSteps';
 import Message from '../components/common/Message';
 import { RootState } from 'presentation/contexts/store';
@@ -41,7 +45,7 @@ export default function PlaceOrderPage() {
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
       if (error)
-        toast.error(error?.data?.message || error.error);
+        toast.error(error?.data?.message || error.error || 'خطایی رخ داد');
     }
   };
 

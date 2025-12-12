@@ -27,14 +27,19 @@ export default function Header() {
       dispatch(clearCredentials());
       dispatch(resetCart());
       navigate('/');
-      location.reload();
+      window.location.reload();
     } catch {
       toast.error('خطایی رخ داد!');
     }
   };
 
   useEffect(() => {
-    setIsNavOpen(false);
+    // Close navigation when route changes
+    const timeoutId = setTimeout(() => {
+      setIsNavOpen(false);
+    }, 0);
+
+    return () => clearTimeout(timeoutId);
   }, [location.pathname]);
 
   useEffect(() => {

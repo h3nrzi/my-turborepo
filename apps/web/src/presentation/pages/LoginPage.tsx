@@ -28,10 +28,8 @@ const LoginPage = () => {
   const isAdmin = Boolean(searchParams.get('isAdmin'));
 
   useEffect(() => {
-    if (isAdmin)
-      toast('شما مجاز به انجام این عملیات نیستید', { icon: '⚠️' });
-    if (!userInfo && isprivate)
-      toast('ابتدا وارد حساب شوید!', { icon: '⚠️' });
+    if (isAdmin) toast('شما مجاز به انجام این عملیات نیستید', { icon: '⚠️' });
+    if (!userInfo && isprivate) toast('ابتدا وارد حساب شوید!', { icon: '⚠️' });
     if (userInfo) navigate(redirect);
   }, [userInfo, redirect, navigate, isprivate, isAdmin]);
 
@@ -42,7 +40,7 @@ const LoginPage = () => {
       navigate(redirect);
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error?.error);
+      toast.error(error?.data?.message || error?.error || 'خطایی رخ داد');
     }
   };
 

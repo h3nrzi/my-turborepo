@@ -22,8 +22,7 @@ const HomePage = () => {
 
   const hasCompletedWarmup = Boolean(data);
 
-  const isStartupLoading =
-    (isLoading || isFetching) && !hasCompletedWarmup;
+  const isStartupLoading = (isLoading || isFetching) && !hasCompletedWarmup;
 
   if (isStartupLoading) return <StartupLoader />;
 

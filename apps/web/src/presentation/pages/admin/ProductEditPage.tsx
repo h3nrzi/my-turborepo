@@ -54,7 +54,7 @@ const ProductEditPage = () => {
       navigate('/admin/product-list');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error);
+      toast.error(error?.data?.message || error.error || 'خطایی رخ داد');
     }
   };
 
@@ -69,7 +69,7 @@ const ProductEditPage = () => {
         toast.success(res.message);
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
-        toast.error(error?.data?.message || error?.error);
+        toast.error(error?.data?.message || error?.error || 'خطایی رخ داد');
       }
     }
   };
@@ -106,7 +106,9 @@ const ProductEditPage = () => {
               <Form.Label>دستهبندی</Form.Label>
               <Form.Control
                 as="select"
-                {...register('category', { required: 'انتخاب دستهبندی الزامی است' })}
+                {...register('category', {
+                  required: 'انتخاب دستهبندی الزامی است',
+                })}
               >
                 <option value="Electronics">الکترونیکی</option>
                 <option value="Sample Category">دسته نمونه</option>

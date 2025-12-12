@@ -225,9 +225,7 @@ export default function ProductPage() {
                     </Row>
 
                     <Form.Group className="mb-3">
-                      <Form.Label className="fw-semibold">
-                        نظر شما
-                      </Form.Label>
+                      <Form.Label className="fw-semibold">نظر شما</Form.Label>
                       <Form.Control
                         as="textarea"
                         rows={4}

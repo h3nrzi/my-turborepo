@@ -87,7 +87,9 @@ export default function OrderPage() {
       try {
         await updateOrderToPaidMutation({ orderId, details: payload }).unwrap();
         orderQueryRefetch();
-        toast.success('پرداخت با موفقیت انجام شد! برای مشاهده پروفایل کلیک کنید');
+        toast.success(
+          'پرداخت با موفقیت انجام شد! برای مشاهده پروفایل کلیک کنید',
+        );
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
         toast.error(
