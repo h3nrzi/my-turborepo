@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import { FC, useEffect } from 'react';
-import { Button, Col, Form, Row, Stack, Table } from 'react-bootstrap';
+import { FC, useEffect, useState } from 'react';
+import { Button, Col, Form, Nav, Row, Stack, Table } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,7 @@ import Order from 'domain/aggregates/OrderAggregate';
 import getErrorMessage from 'shared/utils/getErrorMessage';
 
 export default function ProfilePage() {
+  const [activeTab, setActiveTab] = useState<TabKey>('profile');
   const dispatch = useDispatch();
   const [updateProfileMutation, { isLoading: updateProfileLoading }] =
     useUpdateProfileMutation();
@@ -23,7 +24,7 @@ export default function ProfilePage() {
     data: orders,
     isLoading: ordersLoading,
     error: ordersError,
-  } = useGetMyOrdersQuery();
+  } = useGetMyOrdersQuery(undefined, { skip: activeTab !== 'orders' });
 
   const submitHandler = async ({
     name,
@@ -49,27 +50,59 @@ export default function ProfilePage() {
   };
 
   return (
-    <Row>
+    <Row className="g-4 align-items-start">
       <Col md={3}>
-        <h2 className="mb-3">اطلاعات کاربر</h2>
-        <ProfileForm
-          onSubmit={submitHandler}
-          updateProfileLoading={updateProfileLoading}
-        />
+        <h2 className="mb-3">پروفایل</h2>
+        <Nav variant="pills" className="flex-column gap-2">
+          <Nav.Item>
+            <Nav.Link
+              active={activeTab === 'profile'}
+              onClick={() => setActiveTab('profile')}
+              className="text-center text-md-start"
+            >
+              اطلاعات کاربر
+            </Nav.Link>
+          </Nav.Item>
+          <Nav.Item>
+            <Nav.Link
+              active={activeTab === 'orders'}
+              onClick={() => setActiveTab('orders')}
+              className="text-center text-md-start"
+            >
+              سفارش‌ها
+            </Nav.Link>
+          </Nav.Item>
+        </Nav>
       </Col>
       <Col md={9}>
-        <h2 className="mb-3">سفارشها</h2>
-        {ordersLoading ? (
-          <Loader />
-        ) : ordersError ? (
-          <Message variant="danger">{getErrorMessage(ordersError)}</Message>
-        ) : (
-          <OrdersTable orders={orders} />
-        )}
+        <div className="p-4 border rounded">
+          {activeTab === 'profile' ? (
+            <>
+              <h3 className="mb-3">اطلاعات کاربر</h3>
+              <ProfileForm
+                onSubmit={submitHandler}
+                updateProfileLoading={updateProfileLoading}
+              />
+            </>
+          ) : (
+            <>
+              <h3 className="mb-3">سفارش‌ها</h3>
+              {ordersLoading ? (
+                <Loader />
+              ) : ordersError ? (
+                <Message variant="danger">{getErrorMessage(ordersError)}</Message>
+              ) : (
+                <OrdersTable orders={orders} />
+              )}
+            </>
+          )}
+        </div>
       </Col>
     </Row>
   );
 }
+
+type TabKey = 'profile' | 'orders';
 
 interface FormData {
   name: string;
