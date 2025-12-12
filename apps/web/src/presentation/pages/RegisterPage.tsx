@@ -3,7 +3,7 @@ import { Button, Col, Form, Row, Spinner } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { useRegisterMutation } from 'infrastructure/services/api/users-api';
 import { setCredentials } from 'presentation/contexts/auth';
 import FormContainer from '../components/common/FormContainer';
@@ -34,7 +34,7 @@ const RegisterPage = () => {
 
   const submitHandler = async (data: FormData) => {
     if (data.password !== data.confirmPassword)
-      return toast.warn('رمز عبور و تکرار آن یکسان نیست');
+      return toast('رمز عبور و تکرار آن یکسان نیست', { icon: '⚠️' });
 
     try {
       const res = await registerMutation(data).unwrap();

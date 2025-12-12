@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Button, Form, Stack } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import {
   useCreateProductMutation,
   useUploadProductImageMutation,
@@ -42,15 +42,11 @@ const ProductNewPage = () => {
   const submitHandler: SubmitHandler<FormData> = async (data) => {
     try {
       await createProductMutation({ data });
-      toast.success('محصول با موفقیت ایجاد شد!', {
-        position: 'top-center',
-      });
+      toast.success('محصول با موفقیت ایجاد شد!');
       navigate('/admin/product-list');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error?.error, {
-        position: 'top-center',
-      });
+      toast.error(error?.data?.message || error?.error);
     }
   };
 
@@ -62,12 +58,10 @@ const ProductNewPage = () => {
       try {
         const res = await uploadProductImageMutation(formData).unwrap();
         setValue('image', res.image);
-        toast.success(res.message, { position: 'top-center' });
+        toast.success(res.message);
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
-        toast.error(error?.data?.message || error?.error, {
-          position: 'top-center',
-        });
+        toast.error(error?.data?.message || error?.error);
       }
     }
   };

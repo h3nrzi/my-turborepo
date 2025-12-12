@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useRef } from 'react';
 import { Button, Col, Form } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { savePaymentMethod } from 'presentation/contexts/cart';
 import CheckoutSteps from '../components/common/CheckoutSteps';
 import FormContainer from '../components/common/FormContainer';
@@ -17,9 +17,7 @@ const PaymentPage = () => {
   useEffect(() => {
     if (!shippingAddress) {
       navigate('/shipping');
-      toast.warn('لطفاً آدرس ارسال را تکمیل کنید', {
-        position: 'top-center',
-      });
+      toast('لطفاً آدرس ارسال را تکمیل کنید', { icon: '⚠️' });
     }
   }, [shippingAddress, navigate]);
 

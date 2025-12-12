@@ -4,7 +4,7 @@ import { Badge, Button, Table } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { Fragment } from 'react/jsx-runtime';
 import {
   useDeleteUserMutation,
@@ -51,12 +51,10 @@ const UserListPage = () => {
         }
 
         usersRefetch();
-        toast.success(res.message, { position: 'top-center' });
+        toast.success(res.message);
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
-        toast.error(error?.data?.message || error.error, {
-          position: 'top-center',
-        });
+        toast.error(error?.data?.message || error.error);
       }
     }
   }

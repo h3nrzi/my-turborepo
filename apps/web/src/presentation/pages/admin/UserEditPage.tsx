@@ -3,7 +3,7 @@ import { Button, Form, Stack } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { useGetUserQuery, useUpdateUserMutation } from 'infrastructure/services/api/users-api';
 import { setCredentials } from 'presentation/contexts/auth';
 import FormContainer from '../../components/common/FormContainer';
@@ -63,15 +63,11 @@ const UserEditPage = () => {
         dispatch(setCredentials(updatedUser));
 
       userRefetch();
-      toast.success('کاربر با موفقیت به‌روزرسانی شد', {
-        position: 'top-center',
-      });
+      toast.success('کاربر با موفقیت بهروزرسانی شد');
       navigate('/admin/user-list');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error, {
-        position: 'top-center',
-      });
+      toast.error(error?.data?.message || error.error);
     }
   };
 
@@ -145,7 +141,7 @@ const UserEditPage = () => {
             </Form.Control.Feedback>
           </Form.Group>
           <Button type="submit" variant="secondary" className="text-white">
-            به‌روزرسانی {updateUserLoading && <Loader size="sm" />}
+            بهروزرسانی {updateUserLoading && <Loader size="sm" />}
           </Button>
         </Stack>
       </Form>

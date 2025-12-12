@@ -104,6 +104,37 @@
   color: #e6ffed !important;
 }
 
+.navPillProfile {
+  background: linear-gradient(120deg, rgba(76, 195, 255, 0.12), rgba(94, 234, 212, 0.12)) !important;
+  border-color: rgba(76, 195, 255, 0.45) !important;
+  color: #e5f7ff !important;
+  min-width: 160px;
+  justify-content: flex-start;
+}
+
+.avatarCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.04);
+}
+
+.profileName {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
 .cartBadge {
   font-size: 0.7rem;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);

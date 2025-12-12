@@ -3,7 +3,7 @@ import { Button, Col, Form, Row, Spinner, Stack, Alert } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { useLoginMutation } from 'infrastructure/services/api/users-api';
 import { setCredentials } from 'presentation/contexts/auth';
 import FormContainer from '../components/common/FormContainer';
@@ -29,11 +29,9 @@ const LoginPage = () => {
 
   useEffect(() => {
     if (isAdmin)
-      toast.warn('شما مجاز به انجام این عملیات نیستید', {
-        position: 'top-center',
-      });
+      toast('شما مجاز به انجام این عملیات نیستید', { icon: '⚠️' });
     if (!userInfo && isprivate)
-      toast.warn('ابتدا وارد حساب شوید!', { position: 'top-center' });
+      toast('ابتدا وارد حساب شوید!', { icon: '⚠️' });
     if (userInfo) navigate(redirect);
   }, [userInfo, redirect, navigate, isprivate, isAdmin]);
 
@@ -44,9 +42,7 @@ const LoginPage = () => {
       navigate(redirect);
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error?.error, {
-        position: 'top-center',
-      });
+      toast.error(error?.data?.message || error?.error);
     }
   };
 

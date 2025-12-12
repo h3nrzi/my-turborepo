@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { useCreateOrderMutation } from 'infrastructure/services/api/orders-api';
 import { resetCart, type CartState, type ShippingAddress } from 'presentation/contexts/cart';
 import CheckoutSteps from '../components/common/CheckoutSteps';
@@ -28,7 +28,7 @@ export default function PlaceOrderPage() {
 
   useEffect(() => {
     if (!paymentMethod) {
-      toast.warn('لطفاً روش پرداخت را وارد کنید!', { position: 'top-center' });
+      toast('لطفاً روش پرداخت را وارد کنید!', { icon: '⚠️' });
       navigate('/payment');
     }
   }, [navigate, paymentMethod]);
@@ -41,9 +41,7 @@ export default function PlaceOrderPage() {
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
       if (error)
-        toast.error(error?.data?.message || error.error, {
-          position: 'top-center',
-        });
+        toast.error(error?.data?.message || error.error);
     }
   };
 

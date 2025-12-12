@@ -1,7 +1,6 @@
 import { Container } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+import { Toaster } from 'react-hot-toast';
 import { Fragment } from 'react/jsx-runtime';
 import Footer from 'presentation/components/layout/Footer';
 import Header from 'presentation/components/layout/Header';
@@ -16,7 +15,7 @@ const App = () => {
         </Container>
       </main>
       <Footer />
-      <ToastContainer />
+      <Toaster position="top-center" />
     </Fragment>
   );
 };

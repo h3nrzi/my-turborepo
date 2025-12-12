@@ -1,7 +1,8 @@
 import { Dropdown } from 'react-bootstrap';
-import { FaRegUserCircle, FaUser } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { UserInfo } from 'presentation/contexts/auth';
+import styles from './Header.module.css';
 
 interface ProfileDropdownProps {
   userInfo: UserInfo;
@@ -9,15 +10,18 @@ interface ProfileDropdownProps {
 }
 
 export default function ProfileDropdown({ userInfo, onLogout }: ProfileDropdownProps) {
+  const displayName = userInfo.name || userInfo.email || 'کاربر';
+  const avatarInitial = displayName.trim().charAt(0).toUpperCase();
+
   return (
     <Dropdown>
       <Dropdown.Toggle
         id="profile-dropdown"
         variant="outline-light"
-        className="border-0 rounded-circle p-2 d-flex align-items-center justify-content-center"
-        style={{ width: '45px', height: '45px' }}
+        className={`${styles.navPill} ${styles.navPillProfile}`}
       >
-        <FaRegUserCircle size={24} />
+        <span className={styles.avatarCircle}>{avatarInitial}</span>
+        <span className={styles.profileName}>{displayName}</span>
       </Dropdown.Toggle>
       <Dropdown.Menu align="end" className="shadow border-0 mt-2">
         <Dropdown.Header className="text-muted small">

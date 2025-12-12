@@ -1,7 +1,7 @@
 import { Card, Col, ListGroup, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { addToCart, removeFromCart } from 'presentation/contexts/cart';
 import CartItem from '../components/CartItem';
 import CartSummary from '../components/CartSummary';
@@ -17,12 +17,12 @@ const CartPage = () => {
 
   const addToCartHandler = (item: Product, qty: number) => {
     dispatch(addToCart({ ...item, qty }));
-    toast.success('تعداد با موفقیت به‌روزرسانی شد.', { position: 'top-center' });
+    toast.success('تعداد با موفقیت بهروزرسانی شد.');
   };
 
   const removeFromCartHandler = (_id: string) => {
     dispatch(removeFromCart({ _id }));
-    toast.success('محصول از سبد خرید حذف شد.', { position: 'top-center' });
+    toast.success('محصول از سبد خرید حذف شد.');
   };
 
   const checkoutHandler = () => {

@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Button, Form, Stack } from 'react-bootstrap';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import {
   useGetProductQuery,
   useUpdateProductMutation,
@@ -50,15 +50,11 @@ const ProductEditPage = () => {
   const submitHandler: SubmitHandler<FormData> = async (data) => {
     try {
       await updateProductMutation({ productId, data });
-      toast.success('محصول با موفقیت به‌روزرسانی شد', {
-        position: 'top-center',
-      });
+      toast.success('محصول با موفقیت بهروزرسانی شد');
       navigate('/admin/product-list');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error.error, {
-        position: 'top-center',
-      });
+      toast.error(error?.data?.message || error.error);
     }
   };
 
@@ -70,12 +66,10 @@ const ProductEditPage = () => {
       try {
         const res = await uploadProductImageMutation(formData).unwrap();
         setValue('image', res.image);
-        toast.success(res.message, { position: 'top-center' });
+        toast.success(res.message);
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
-        toast.error(error?.data?.message || error?.error, {
-          position: 'top-center',
-        });
+        toast.error(error?.data?.message || error?.error);
       }
     }
   };
@@ -109,10 +103,10 @@ const ProductEditPage = () => {
           </Form.Group>
           <Stack gap={4} direction="horizontal">
             <Form.Group controlId="category" className="flex-grow-1">
-              <Form.Label>دسته‌بندی</Form.Label>
+              <Form.Label>دستهبندی</Form.Label>
               <Form.Control
                 as="select"
-                {...register('category', { required: 'انتخاب دسته‌بندی الزامی است' })}
+                {...register('category', { required: 'انتخاب دستهبندی الزامی است' })}
               >
                 <option value="Electronics">الکترونیکی</option>
                 <option value="Sample Category">دسته نمونه</option>
@@ -180,7 +174,7 @@ const ProductEditPage = () => {
             )}
           </Form.Group>
           <Button type="submit" variant="secondary" className="text-white">
-            به‌روزرسانی {updateProductLoading && <Loader size="sm" />}
+            بهروزرسانی {updateProductLoading && <Loader size="sm" />}
           </Button>
         </Stack>
       </Form>

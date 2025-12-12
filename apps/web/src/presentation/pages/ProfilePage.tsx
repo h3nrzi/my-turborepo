@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { useGetMyOrdersQuery } from 'infrastructure/services/api/orders-api';
 import { useUpdateProfileMutation } from 'infrastructure/services/api/users-api';
 import { setCredentials } from 'presentation/contexts/auth';
@@ -32,9 +32,7 @@ export default function ProfilePage() {
     confirmPassword,
   }: FormData) => {
     if (password !== confirmPassword)
-      return toast.error('رمز عبور و تکرار آن یکسان نیست', {
-        position: 'top-center',
-      });
+      return toast.error('رمز عبور و تکرار آن یکسان نیست');
 
     try {
       const res = await updateProfileMutation({
@@ -43,14 +41,10 @@ export default function ProfilePage() {
         password,
       }).unwrap();
       dispatch(setCredentials(res));
-      toast.success('پروفایل با موفقیت به‌روزرسانی شد', {
-        position: 'top-center',
-      });
+      toast.success('پروفایل با موفقیت بهروزرسانی شد');
     } catch (err: unknown) {
       const error = err as { data?: { message?: string }; error?: string };
-      toast.error(error?.data?.message || error?.error, {
-        position: 'top-center',
-      });
+      toast.error(error?.data?.message || error?.error);
     }
   };
 
@@ -64,7 +58,7 @@ export default function ProfilePage() {
         />
       </Col>
       <Col md={9}>
-        <h2 className="mb-3">سفارش‌ها</h2>
+        <h2 className="mb-3">سفارشها</h2>
         {ordersLoading ? (
           <Loader />
         ) : ordersError ? (
@@ -148,7 +142,7 @@ const ProfileForm: FC<ProfileFormProps> = ({
           />
         </Form.Group>
         <Button type="submit" variant="primary" className="w-50">
-          به‌روزرسانی
+          بهروزرسانی
           {updateProfileLoading && <Loader size="sm" />}
         </Button>
       </Stack>

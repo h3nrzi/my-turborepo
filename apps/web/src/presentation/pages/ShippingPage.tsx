@@ -3,7 +3,7 @@ import { Button, Form, Stack } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import { saveShippingAddress } from 'presentation/contexts/cart';
 import FormContainer from '../components/common/FormContainer';
 import { RootState } from 'presentation/contexts/store';
@@ -34,7 +34,7 @@ const ShippingPage = () => {
     setValue('postalCode', shippingAddress?.postalCode as string);
 
     if (orderItems.length === 0) {
-      toast.warn('لطفاً ابتدا محصولی را انتخاب کنید', { position: 'top-center' });
+      toast('لطفاً ابتدا محصولی را انتخاب کنید', { icon: '⚠️' });
       navigate('/cart');
     }
   }, [orderItems, navigate, shippingAddress, setValue]);

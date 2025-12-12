@@ -3,7 +3,7 @@ import { Fragment } from 'react';
 import { Button, Col, Row, Table } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { Link, useSearchParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 import {
   useDeleteProductMutation,
   useGetAllProductsQuery,
@@ -32,12 +32,10 @@ export default function ProductListPage() {
       try {
         const res = await deleteProductMutation({ productId: id }).unwrap();
         productsRefetch();
-        toast.success(res.message, { position: 'top-center' });
+        toast.success(res.message);
       } catch (err: unknown) {
         const error = err as { data?: { message?: string }; error?: string };
-        toast.error(error?.data?.message || error.error, {
-          position: 'top-center',
-        });
+        toast.error(error?.data?.message || error.error);
       }
     }
   };
