@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { useSearchParams } from 'react-router-dom';
 import { Fragment } from 'react/jsx-runtime';
@@ -21,15 +20,10 @@ const HomePage = () => {
     keyword,
   });
 
-  const hasCompletedWarmupRef = useRef(false);
+  const hasCompletedWarmup = Boolean(data);
 
-  useEffect(() => {
-    if (!isLoading && !isFetching) {
-      hasCompletedWarmupRef.current = true;
-    }
-  }, [isLoading, isFetching]);
-
-  const isStartupLoading = (isLoading || isFetching) && !hasCompletedWarmupRef.current;
+  const isStartupLoading =
+    (isLoading || isFetching) && !hasCompletedWarmup;
 
   if (isStartupLoading) return <StartupLoader />;
 
